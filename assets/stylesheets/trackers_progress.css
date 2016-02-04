@@ -1,0 +1,281 @@
+div#roadmaps p {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+h2.project {
+	text-align: center;
+	width: 100%;
+	border-bottom: 1px solid black;
+	margin-top: 1em;
+}
+table.tracker tr td {
+	white-space: nowrap; 
+	text-align: right;
+	overflow: visible;
+}
+table.tracker tr td div {
+	position: absolute;
+	text-align: left;
+	left: 1.5em;
+}
+
+td.childissue div {
+	padding-left: 16px;
+	background: url("../../../images/bullet_arrow_right.png") no-repeat scroll 0 50% transparent;
+}
+
+p.subtaskpct, td.subtaskpct {
+	color: #999999
+}
+
+table.progress {
+	border: 1px solid #D7D7D7;
+}
+
+/* Cores antigas
+.t_green { background-color: #A6FF8C }
+.issue-table .ft_green { font-weight: bold; color: #48CE21 }
+.t_red { background-color: #FF8CA6 }
+.issue-table .ft_red { font-weight: bold; color: #FF8CA6 }
+.t_yellow { background-color: #F7F3B5 }
+.issue-table .ft_yellow { font-weight: bold; color: #DEAF0C }
+.t_gray { background-color: #D4D4D4 }
+.issue-table .ft_gray { font-weight: bold; color: #8E8E9E }
+*/
+
+.t_green { background-color: #5dc95d; color: white; text-align: center; }
+.issue-table .ft_green { font-weight: bold; color: #5dc95d }
+.t_red { background-color: #ec6661; color: white; text-align: center; }
+.issue-table .ft_red { font-weight: bold; color: #ec6661 }
+.t_yellow { background-color: #ffdba7; color: #555; text-align: center; }
+.issue-table .ft_yellow { font-weight: bold; color: #ecac51 }
+.t_gray { background-color: #ddd; color: #555; text-align: center; }
+.issue-table .ft_gray { font-weight: bold; color: #999 }
+
+
+.arrow_down {
+	background: url("../../../images/1downarrow.png") no-repeat;
+	padding-left: 20px ;
+}
+.arrow_up {
+	background: url("../../../images/1uparrow.png") no-repeat;
+	padding-left: 20px ;
+}
+
+
+.issue-table {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+	border: 1px solid #BBB;
+	margin-top: 15px;
+}
+
+.issue-table a:link {
+	color: #6B3030;
+}
+
+.issue-table th {
+	padding: 2px 7px 2px 7px;
+	font-weight: normal;
+	font-size: 14px;
+	color: #039;
+	border-bottom: 1px dashed #8A95A0;
+}
+
+.issue-table td {
+	padding: 7px 17px 7px 17px;
+	color: #8E8E9E;
+}
+
+.issue-table tbody tr:hover td {
+	color: #2A2A33;
+	background: #eaeaea;
+}
+
+.issue-table tbody tr {
+	border-bottom: 1px solid #E7E7E7;
+}
+
+
+fieldset#legend {
+	position: fixed; 
+	top: 150px; 
+	right: 35px;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	padding: 20px;
+	box-shadow: 2px 3px 10px #CCC;
+}
+fieldset#legend ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+fieldset#legend ul li {
+	padding: 5px 10px;
+	border: 1px solid #888;
+	margin-bottom: 2px;
+}
+
+
+
+
+.planning-redmine, .planning-redmine * {
+	box-sizing: border-box;
+}
+
+.planning-config {
+	width: 98%;
+	margin: 0 1% 20px;
+	border: 1px solid #CCC;
+	box-shadow: 2px 2px 5px #CCC;
+	background: #F1F1F1;
+}
+.planning-config-title {
+	border-bottom: 1px solid #DDD;
+	padding-bottom: 10px;
+}
+.planning-config-content {
+	width: 100%;
+	padding: 15px 2%;
+}
+.planning-config-field {
+	width: 100%;
+	margin: 15px 0;
+	clear: both;
+	overflow: auto;
+	zoom: 1;
+}
+.planning-config-field-label {
+	font-size: 11px;
+}
+.planning-config-field .planning-config-field-label {
+	display: block;
+	font-weight: bold;
+}
+.planning-config-field .planning-config-field-input {
+	width: 100%;
+}
+.planning-config-field-inline .planning-config-field-label {
+	display: inline-block;
+}
+.planning-config-field-inline .planning-config-field-input {
+	display: inline-block;
+	margin-left: 20px;
+	width: auto;
+}
+.planning-input-text {
+	width: 350px;
+	height: 30px;
+	padding: 4px 12px;
+	font-size: 12px;
+	line-height: 1.42857;
+	color: #555;
+	background-color: #FFF;
+	background-image: none;
+	border: 1px solid #CCC;
+	border-radius: 4px;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+	transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+.planning-btn {
+	margin-right: 0 5px 0 0;
+	display: inline-block;
+	padding: 6px 12px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.4;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	text-transform: none;
+	overflow: visible;
+	box-sizing: border-box;
+}
+.planning-btn.planning-btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+.planning-btn.planning-btn-primary:hover {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;
+}
+.planning-select {
+	margin: 0 5px 0 0;
+	width: 350px;
+	display: block;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.4;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	text-transform: none;
+	box-sizing: border-box;
+}
+.planning-select option {
+	box-sizing: border-box;
+}
+
+
+.planning-user {
+    width: 48%;
+	float: left;
+	background-color: #F7F7F7;
+	border: 1px solid #CCC;
+	padding: 2%;
+	margin: 10px 1%;
+	max-height: 125px;
+
+	box-shadow: 2px 2px 5px #CCC;
+}
+.planning-user.planning-user--active-animation {
+	-webkit-transition: all 1s;
+    transition: all 1s;
+}
+.planning-user.planning-user--active {
+	width: 98%;
+	background-color: white;
+	border-color: #BBB;
+	max-height: 2000px;
+}
+.planning-user .people-progress {
+	border: 1px solid #D7D7D7; 
+	font-weight: bold;
+	border-spacing: 0;
+}
+.planning-user-details {
+	display: block;
+	margin-top: 10px;
+}
+
+.planning-w50p {
+	width: 50%;
+	float: left;
+	padding: 0 10px 0 0;
+}
+

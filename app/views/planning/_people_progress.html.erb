@@ -1,0 +1,63 @@
+
+<input type="hidden" name="user-groups-info" value="<% data.user.groups.each { |group| %><%= group.id %>,<% }%>">
+
+<div class="people-progress">
+	<table style="width: 100%; height: 20px;" cellspacing="0" cellpadding="0">
+		<tr >
+			<% if data.total_paused_percent.round > 0 %>
+				<td class="t_gray"
+					style="width:<%= data.total_paused_percent.round %>%"><%= data.total_paused_percent.round %>%</td>
+			<% end
+			   if data.total_overdue_percent.round > 0 %>
+				<td class="t_red" 
+					style="width:<%= data.total_overdue_percent.round %>%"><%= data.total_overdue_percent.round %>%</td>
+			<% end
+			   if data.total_in_time_percent.round > 0 %>
+				<td  class="t_green"
+					style="width:<%= data.total_in_time_percent.round %>%"><%= data.total_in_time_percent.round %>%</td>
+			<% end
+			   if data.total_unplanned_percent.round > 0 %>
+				<td  class="t_yellow"
+					style="width:<%= data.total_unplanned_percent.round %>%"><%= data.total_unplanned_percent.round %>%</td>
+			<% end %>
+		</tr>
+	</table>
+</div>
+
+<a href="#" class="arrow_down planning-user-details">
+	<%= l(:issues)%>
+</a>
+
+<table class="issue-table" style="display: none;">
+	<thead>
+		<tr>
+			<th style="width: 100px"><%= l(:status)%></th>
+			<th><%= l(:description)%></th>
+			<th style="width: 100px"><%= l(:start_date)%></th>
+			<th style="width: 100px"><%= l(:due_date)%></th>
+			<th style="width: 100px"><%= l(:spent_hours)%></th>
+			<th style="width: 100px"><%= l(:ocomon)%></th>
+			<th style="width: 100px"><%= l(:priority)%></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% data.issues.sort{|x,y| l(x.planning_status) <=> l(y.planning_status) }.each { |issue|%> 
+			<tr>
+				<td class="<%= data.issues_status[issue.id.to_s] %>"><%=l(issue.planning_status)%></td>
+				<td>
+					<%= link_to("##{issue.parent.id} > ", {:controller => "issues", :action => "show", :id => issue.parent.id}, :class => issue.parent.css_classes, :title => issue.parent.subject, :target => "_blank") if !issue.parent.nil? %> 
+					
+					<%= issue.project.name + " - " %><%= link_to("#{issue.tracker.name} ##{issue.id}", {:controller => "issues", :action => "show", :id => issue.id}, :class => issue.css_classes, :title => issue.subject, :target => "_blank") %><%= ": " + issue.subject %>
+				</td>
+				<td style="text-align: center;"><%= issue.start_date.strftime('%d/%m/%Y') unless issue.start_date.nil? %></td>
+				<td style="text-align: center;"><%= issue.due_date.strftime('%d/%m/%Y') unless issue.due_date.nil? %></td>
+				<td ><%= issue.spent_hours > 0 ? (link_to l_hours(issue.spent_hours), {:controller => 'timelog', :action => 'index', :project_id => issue.project, :issue_id => issue}) : "-" %></td>
+
+
+				<td style="text-align: center"><%= (!data.issues_ocomon[issue.id.to_s].nil? && data.issues_ocomon[issue.id.to_s].length > 0 && data.issues_ocomon[issue.id.to_s]) || '-' %></td>
+				<td style="text-align: center"><%= data.issues_priority[issue.id.to_s] || '-' %></td>
+
+			</tr>	
+		<% }%>
+	</tbody>
+</table>

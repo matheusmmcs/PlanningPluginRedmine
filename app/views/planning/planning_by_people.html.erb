@@ -1,0 +1,103 @@
+<div class="planning-redmine">
+	<h2>
+		<%=l(:people_based_planning)%> 
+		<a href="#" id="label_open_button" style="display:none; font-size: 7pt;">(<%= l(:open) %> <%= l(:legend) %>)</a>
+	</h2> 
+
+	<fieldset id="legend">
+		<legend><%= l(:legend) %> (<a href="#" class="planning-legend-close"><%= l(:close) %></a>)</legend>
+		<ul>
+			<li ><%= l(:no_issues) %></li>
+			<li class="t_gray"><%= l(:paused) %></li>
+			<li class="t_red" ><%= l(:overdue) %></li>
+			<li class="t_green"><%= l(:in_time) %></li>
+			<li class="t_yellow"><%= l(:unplanned) %></li>
+		</ul>
+	</fieldset>
+
+	<div class="planning-config">
+		<div class="planning-config-content">
+			<h3 class="planning-config-title"><%= l(:newsearch) %>:</h3>
+			<%= form_tag({:controller => "planning", :action => "planning_by_people"}, :method => "get") do %>
+				<div class="planning-config-field">
+					<div class="planning-w50p">
+						<label class="planning-config-field-label"><%= l(:newsearch_dtini) %>:</label>
+						<div class="planning-config-field-input">
+							<%= text_field_tag :dtini, @param_dtini, class: 'planning-input-text datepicker-here', :data => {:position => 'right top', :language => 'pt-br', :todayButton => 'true', :clearButton => 'true'} %>
+						</div>
+					</div>
+					<div class="planning-w50p">
+						<label class="planning-config-field-label"><%= l(:newsearch_dtend) %>:</label>
+						<div class="planning-config-field-input">
+							<%= text_field_tag :dtend, @param_dtend, class: 'planning-input-text datepicker-here', :data => {:position => 'right top', :language => 'pt-br', :todayButton => 'true', :clearButton => 'true'} %>
+						</div>
+					</div>
+				</div>
+				<div class="planning-config-field">
+					<%= submit_tag l(:newsearch_btn), class: 'planning-btn planning-btn-primary' %>
+				</div>
+			<% end %>
+		</div>
+		
+		<hr/>
+
+		<div class="planning-config-content">
+			<h3 class="planning-config-title"><%= l(:filters) %>:</h3>
+			<div class="planning-config-field">
+				<label class="planning-config-field-label"><%= l(:filter_by_unity) %>:</label>
+				<div class="planning-config-field-input">
+					<% @groups.sort{|x,y| x.id <=> y.id}.each { |data| %>
+						<label>
+					      <input name="filtro-unidades" value="<%= data.id %>" type="checkbox"> <%= data.name %>
+					    </label>
+					<% } %>
+				</div>
+			</div>
+			<div class="planning-config-field">
+				<div class="planning-w50p">
+					<label class="planning-config-field-label"><%= l(:filter_by_name) %>:</label>
+					<input class="planning-input-text" type="text" name="filtro-username" />
+				</div>
+				<div class="planning-w50p">
+					<label class="planning-config-field-label"><%= l(:filter_by_issues) %>:</label>
+					<div class="planning-config-field-input">
+						<select name="filtro-issues"  class="planning-select">
+							<option value="0"> <%= l(:all) %> </option>
+							<option value="1"> <%= l(:filter_by_issues_none) %> </option>
+							<option value="2"> <%= l(:filter_by_issues_with) %> </option>
+							<option value="3"> <%= l(:filter_by_issues_overdue) %> </option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<% @users_grouped.sort{|x,y| x.order <=> y.order}.each { |data| %>
+		<div class="planning-user" data-issues-opened="<%= data.issues.length %>" data-issues-overdue="<%= data.total_overdue %>">
+			<a name="<%=data.user.id%>"/>
+			<h3>
+				<%=link_to_user(data.user)%> 
+				<small>- <%=l(:issue_opened_of, :count => data.issues.length) %> <%= l(:issue_total, :count => data.total_issues )%> </small>
+			</h3>
+			<%= render :partial => 'people_progress', :locals => {:data => data} %>
+		</div>
+	<% } %>
+
+
+	<% content_for :header_tags do %>
+		<!-- vendor -->
+		<%= stylesheet_link_tag '../vendor/air-datepicker/css/datepicker.min', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+		<%= javascript_include_tag '../vendor/air-datepicker/js/datepicker.min', :plugin => 'planning_plugin_redmine' %>
+		<%= javascript_include_tag '../vendor/air-datepicker/js/i18n/datepicker.pt-br', :plugin => 'planning_plugin_redmine' %>
+		<%= javascript_include_tag '../vendor/formatter/jquery.formatter.min', :plugin => 'planning_plugin_redmine' %>
+
+		<!-- plugin -->
+	  	<%= stylesheet_link_tag 'trackers_progress', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+	  	<%= javascript_include_tag 'planning_by_people', :plugin => 'planning_plugin_redmine' %>
+	<% end %>
+
+	<% html_title(l(:people_based_planning)) %>
+
+</div>

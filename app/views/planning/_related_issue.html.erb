@@ -1,0 +1,42 @@
+<% 	
+
+	# Select colors and width from progress
+	
+	progresswidth = issue.done_ratio
+	
+	if issue.closed? or issue.done_ratio==100
+		progresswidth = 100
+		status_style = "t_gray"
+	elsif issue.done_ratio == 0
+		status_style = ""
+	else
+		if not issue.due_date.nil?
+			if issue.due_date < Time.new.to_date
+				status_style = 't_red'
+			else
+				status_style = 't_green'
+			end
+		else
+			status_style = 't_yellow'
+		end
+	end
+
+%>
+
+
+<tr>
+	<td><%if not issue.assigned_to.nil? %><a href="people/#<%=issue.assigned_to.id%>"><%= issue.assigned_to.name %></a><% end %></td>
+	<td>
+		<%= link_to("##{issue.parent.id} > ", {:controller => "issues", :action => "show", :id => issue.parent.id}, :class => issue.parent.css_classes, :title => issue.parent.subject) if !issue.parent.nil? %> 
+		<%= link_to_issue(issue, :project => (issue.project)) %></td>
+	<td style="text-align: center;"><%= issue.start_date.strftime('%d/%m/%Y') unless issue.start_date.nil? %></td>
+	<td style="text-align: center;"><%= issue.due_date.strftime('%d/%m/%Y') unless issue.due_date.nil? %></td>
+	<td >
+		
+		<div style="float: left; width: <%= progresswidth %>%; color: black;" class='<%= status_style %>'><%= (issue.closed?)?100:issue.done_ratio %>%</div> 
+		<!--div style="width: <%= 100-progresswidth %>%"></div-->
+	</td>
+</tr>	
+
+	
+

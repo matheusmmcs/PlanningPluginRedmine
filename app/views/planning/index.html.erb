@@ -1,0 +1,26 @@
+<h2><%= l(:planning_based) %></h2>
+
+<div id="all">
+	<div id="content">
+		<ul>
+			<li>
+				<%= link_to options={:controller => 'planning', :action => 'planning_by_projects'} do %>
+					<span>
+						<%= l(:projects)%>
+					</span>
+					<span class="info red"><%= l(:indevelopment)%></span>
+					<%= image_tag('projects.png', :plugin => 'planning_plugin_redmine') %>
+				<% end %>
+
+				<%= link_to options={:controller => 'planning', :action => 'planning_by_people'} do %>
+					<span><%= l(:people)%></span>
+					<%= image_tag('people.png', :plugin => 'planning_plugin_redmine') %>
+				<% end %>
+			</li>
+		</ul>
+	</div>
+</div>
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'menu', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+<% end %>
+<% html_title('Planejamento') -%>

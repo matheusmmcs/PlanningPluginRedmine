@@ -1,0 +1,82 @@
+#all {
+	text-align: center;
+}
+
+#content {
+	text-align: left;
+}
+
+#content ul, #content ul * {
+	box-sizing: border-box;
+}
+
+#content ul{
+	list-style: none;
+	width: 100%;
+	margin: 0px auto;
+	padding: 0 2%;
+}
+
+#content ul li a {
+	float: left;
+	display: block;
+	position: relative;
+	background-color: #EEE;
+	height: 80px;
+	text-decoration: none;
+	color: #413E2C;
+	border-radius: 5px;
+	border: 1px solid #BBB;
+	width: 48%;
+	margin: 10px 1%;
+
+	text-indent: 30px;
+	text-align: justify;
+	overflow: hidden;
+	box-shadow: 2px 2px 5px #CCC;
+
+	transition: background-color 1s, box-shadow 1s;
+}
+
+#content ul li a span {
+	font-size: 18px;
+	font-weight: bold;
+	height: 80px;
+	line-height: 80px;
+	vertical-align: middle;
+}
+
+#content ul li a img {
+	position: absolute;
+	right: 0;
+	top: -75px;
+	opacity: 0.5;
+	box-shadow: 0px 0px 10px #555;
+	width: 270px;
+
+	transition: width 1s, opacity 1s, box-shadow 1s;
+}
+
+#content ul li a:hover {
+	background-color: #F2F2F2;
+	box-shadow: 2px 3px 6px #BBB;
+}
+#content ul li a:hover img {
+	width: 280px;
+	opacity: 0.9;
+	box-shadow: 0px 0px 30px #555;
+}
+
+#content ul li a span.info {
+	font-size: 12px;
+	position: absolute;
+	top: 0px;
+	left: 30px;
+	display: block;
+	height: 20px;
+	line-height: 20px;
+	text-indent: 0px;
+}
+#content ul li a span.info.red {
+	color: rgb(225, 100, 100);
+}

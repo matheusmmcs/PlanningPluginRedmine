@@ -1,0 +1,16 @@
+<h3><%= l(:personal_progress) %></h3>
+<style>
+	#people-progress {
+		width: 100% !important;
+	}
+</style>
+
+<%
+	data = PlanningHelper::planning_issue_by_user(User.current) 
+%>
+
+<%= render :partial => 'planning/people_progress', :locals => {:data => data } %>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'trackers_progress', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+<% end %>

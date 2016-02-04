@@ -1,0 +1,79 @@
+<%= render :partial => 'filters', :locals => {:query => @query} %>
+<h2><%= l(:projects_based_planning)%> <a href="javascript:void();" id="label_open_button" style="display:none; font-size: 7pt;" onClick=" $('legend').show(); $(this).hide();  ">(<%=l(:open)%> <%=l(:legend)%>)</a></h2>
+
+<fieldset id="legend">
+	<legend><%=l(:legend)%> (<a href="javascript:void();" onClick=" $('legend').hide(); $('label_open_button').show(); "><%=l(:close)%></a>)</legend>
+	<ul>
+		<li class="t_gray"><%=l(:closed)%></li>
+		<li class="t_red" ><%=l(:overdue)%></li>
+		<li class="t_green"><%=l(:in_time)%></li>
+		<li class="t_yellow"><%=l(:unplanned)%></li>
+	</ul>
+</fieldset>
+
+<div id="roadmaps">
+	<%
+		@user_synthesis.keys.sort_by{|project| project.self_and_ancestors.join('/') }.each{ |project|
+	%>
+		<h2 class="project">
+			<%= link_to_if(project.visible?(User.current),project.name, {:controller => 'projects', :action => 'show', :id => project.id}) %>
+		</h2>
+		<%
+			@user_synthesis[project].keys.sort{|v1,v2| v1.splitted_version_name<=>v2.splitted_version_name}.each{ |version|
+				synthesis = @user_synthesis[project][version]
+		%>
+			<div style="margin-top: 30px; border-bottom: 2px solid #eee">
+				<h3 class="version">
+					<%= link_to_if(version.visible?(User.current),version.name, {:controller => 'versions', :action => 'show', :id => version.id}) %>
+					<span style="font-size:0.7em;">
+
+						(<%= (version.due_date.nil?) ? l(:no_due_date) : l(:due_date_info, :due_date => version.due_date) %>) - 
+
+						<%= "("+l(:version_status_locked)+")" if version.status == 'locked' %>
+						<%= link_to l(:button_edit), {:controller => 'versions', :action => 'edit', :id => version.id} if version.visible?(User.current) %>
+					</span>
+				</h3>
+				
+				<%= render :partial => 'trackers_progress', :locals => {:synthesis => synthesis} %>
+
+				<a href="javascript:void(0);" class="arrow_down" onClick="$(this).next().toggle(); $(this).toggleClassName('arrow_up')" ><%= l(:related_issues)%></a>
+				<div style="margin-left: 20px; display:none;">
+
+					<% synthesis.statuses.sort_by{|status, issues| issues[0].status.position }.each{|status, issues| %>
+
+						<a href="javascript:void(0);" class="arrow_down" onClick="$(this).next().toggle(); $(this).toggleClassName('arrow_up')" >
+							<%= status %>
+						</a>
+						<div style="display: none; margin-left: 20px;">
+							<table id="issue-table">
+								<thead>
+									<tr>
+										<th style="width: 100px"><%= l(:assigned_to)%></th>
+										<th><%= l(:description)%></th>
+										<th style="width: 100px"><%= l(:start_date)%></th>
+										<th style="width: 100px"><%= l(:due_date)%></th>
+										<th style="width: 100px"><%= l(:progress)%></th>
+									</tr>
+								</thead>
+								<tbody>
+							<% issues.sort.each { |issue| %> 
+								<%= render :partial => 'related_issue', :locals => {:synthesis => synthesis, :issue => issue } %>			
+							<% }%>
+								</tbody>
+							</table>
+						</div>
+
+						<div style="clear:both; " > </div>
+					<% } # statuses %>
+
+				</div>
+			</div>
+		<% } # version %>
+	<% } # project %>
+	<h3><%= l(:no_projects_found) if @user_synthesis.empty? %></h3>
+</div>
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'trackers_progress', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+<% end %>
+
+<% html_title(l(:projects_based_planning)) -%>

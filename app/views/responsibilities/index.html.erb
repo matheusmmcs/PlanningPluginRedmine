@@ -1,0 +1,7 @@
+<h2><% l(:responsibilities) %></h2>
+	<%= responsibilities_render_project_hierarchy(@projects) %>
+</div>
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'trackers_progress', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+<% end %>
+<% html_title(l(:responsibilities)) %>

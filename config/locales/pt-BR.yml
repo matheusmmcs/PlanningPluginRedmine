@@ -1,0 +1,72 @@
+pt-BR:
+
+  planning_based: Planejamento baseado em
+  people_based_planning: Planejamento baseado em pessoas
+  projects_based_planning: Planejamento baseado em projetos
+  projects: Projetos
+  project: Projeto
+  people: Pessoas
+  personal_progress: Progresso Pessoal
+  responsibilities: Responsabilidades
+  planning: Planejamento
+  indevelopment: Em desenvolvimento...
+  issues: Tarefas
+
+  # Permissions
+  permission_view_planning: Ver Planejamento
+  responsibilities_view_planning: Ver Responsabilidades
+
+  # Status
+  paused: Em Pausa
+  unplanned: Sem Data
+  in_time: No Prazo
+  overdue: Atrasado
+  no_issues: Sem Tarefas
+  closed: Fechada
+
+  # Issue Information
+  status: Status
+  description: Descrição
+  start_date: Data Inicio
+  due_date: Data Prevista
+  spent_hours: Horas Trabalhadas
+  progress: Progresso
+  assigned_to: Atribuído para
+  ocomon: OCOMON
+  priority: Prioridade
+
+  # Filter
+  filters: Filtros
+  filter_by_unity: Por Unidades
+  filter_by_name: Pelo Nome do Colaborador
+  filter_by_issues: Estado das Tarefas
+  filter_by_issues_none: Sem Tarefas Abertas
+  filter_by_issues_with: Com Tarefas Abertas
+  filter_by_issues_overdue: Com Tarefas Atrasadas
+
+  newsearch: Busca Parametrizada
+  newsearch_dtini: Data Inicial
+  newsearch_dtend: Data Final
+  newsearch_btn: Realizar Nova Busca
+
+  # General
+  all: Todos
+  open: Abrir
+  close: Fechar
+  legend: Legenda
+  no_due_date: Sem data estimada
+  due_date: Data estimada
+  due_date_info: "Data estimada: %{due_date}"
+  no_projects_found: Nenhum projeto encontrado.
+
+  related_issues: Tarefas Relacionadas
+
+  issue_opened_of: 
+    zero: "%{count} Tarefa Aberta de "
+    one: "%{count} Tarefa Aberta de "
+    other: "%{count} Tarefas Abertas de "
+
+  issue_total: 
+    zero: "%{count} Tarefa"
+    one: "%{count} Tarefa"
+    other: "%{count} Tarefas"
