@@ -43,11 +43,20 @@ pt-BR:
   filter_by_issues_none: Sem Tarefas Abertas
   filter_by_issues_with: Com Tarefas Abertas
   filter_by_issues_overdue: Com Tarefas Atrasadas
+  filter_by_issues_unplanned: Com Tarefas Sem Data
+
+  filter_by_issues_requester: Por Solicitante
+  filter_by_issues_requester_palceholder: Selecione o Solicitante desejado
+  filter_by_issues_requester_sector: Por Setor Solicitante
+  filter_by_issues_requester_sector_palceholder: Selecione o Setor do Solicitante desejado
+
 
   newsearch: Busca Parametrizada
   newsearch_dtini: Data Inicial
   newsearch_dtend: Data Final
   newsearch_btn: Realizar Nova Busca
+  newsearch_projects: Selecione o(s) projeto(s) desejados
+  newsearch_projects_exclude: Todos os projetos, exceto os selecionados
 
   # General
   all: Todos

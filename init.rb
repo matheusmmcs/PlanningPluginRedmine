@@ -1,6 +1,6 @@
 Redmine::Plugin.register :planning_plugin_redmine do
   name 'Planning plugin to Redmine'
-  author 'Matheus Campanhã'
+  author 'Matheus Campanha and Madson Viana and Stephane Rondinaud'
   description 'A plugin to track redmine issues and/or projects according to plan.'
   version '1.0.0'
 

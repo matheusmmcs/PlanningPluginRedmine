@@ -44,6 +44,7 @@ table.progress {
 .issue-table .ft_gray { font-weight: bold; color: #8E8E9E }
 */
 
+/*
 .t_green { background-color: #5dc95d; color: white; text-align: center; }
 .issue-table .ft_green { font-weight: bold; color: #5dc95d }
 .t_red { background-color: #ec6661; color: white; text-align: center; }
@@ -52,6 +53,17 @@ table.progress {
 .issue-table .ft_yellow { font-weight: bold; color: #ecac51 }
 .t_gray { background-color: #ddd; color: #555; text-align: center; }
 .issue-table .ft_gray { font-weight: bold; color: #999 }
+*/
+
+.t_green { background-color: #5cb85c; color: white; text-align: center; }
+.issue-table .ft_green { font-weight: bold; color: #5cb85c }
+.t_red { background-color: #d9534f; color: white; text-align: center; }
+.issue-table .ft_red { font-weight: bold; color: #d9534f }
+.t_yellow { background-color: #f0ad4e; color: white; text-align: center; }
+.issue-table .ft_yellow { font-weight: bold; color: #f0ad4e}
+.t_gray { background-color: #ddd; color: #555; text-align: center; }
+.issue-table .ft_gray { font-weight: bold; color: #999 }
+
 
 
 .arrow_down {
@@ -145,6 +157,7 @@ fieldset#legend ul li {
 }
 .planning-config-field {
 	width: 100%;
+	min-height: 45px;
 	margin: 15px 0;
 	clear: both;
 	overflow: auto;
@@ -168,7 +181,11 @@ fieldset#legend ul li {
 	margin-left: 20px;
 	width: auto;
 }
-.planning-input-text {
+.planning-redmine .chosen-single,
+.planning-redmine .chosen-container-single .chosen-drop {
+	width: 350px;
+}
+.planning-input-text, .planning-redmine .chosen-choices {
 	width: 350px;
 	height: 30px;
 	padding: 4px 12px;
@@ -181,6 +198,19 @@ fieldset#legend ul li {
 	border-radius: 4px;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
 	transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+.planning-redmine .chosen-container-single .chosen-single {
+	background: #FFF;
+	line-height: 1.4;
+	height: 34px;
+	padding: 6px 12px;
+	box-shadow: none;
+}
+.planning-redmine .chosen-container-single .chosen-single div {
+	padding: 4px 0px;
+}
+.planning-redmine .chosen-container-single .chosen-single abbr {
+	top: 10px;
 }
 .planning-btn {
 	margin-right: 0 5px 0 0;
@@ -240,6 +270,12 @@ fieldset#legend ul li {
 .planning-select option {
 	box-sizing: border-box;
 }
+.planning-config-field-input label {
+	margin-right: 10px;
+}
+.planning-config-field-input label:last-child {
+	margin-right: 0;
+}
 
 
 .planning-user {
@@ -279,3 +315,85 @@ fieldset#legend ul li {
 	padding: 0 10px 0 0;
 }
 
+
+/* INPUT GROUP */
+
+.planning-input-group {
+	width: 350px;
+	box-sizing: border-box;
+	position: relative;
+	display: table;
+	border-collapse: separate;
+}
+.planning-input-group * {
+	box-sizing: border-box;
+}
+.planning-input-group .input-group-addon {
+	display: table-cell;
+	width: 1%;
+	white-space: nowrap;
+	vertical-align: middle;
+    
+    padding: 6px 12px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1;
+	color: #555;
+	text-align: center;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+.planning-input-group .input-group-addon:first-child {
+	border-right: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.planning-input-group .planning-input-text {
+	display: table-cell;
+	width: 100%;
+	height: 32px;
+	margin-top: 0;
+	margin-bottom: 0;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+
+/* UTILS */
+.u-overflow-visible {
+	overflow: visible !important;
+}
+
+
+
+/* FONTS */
+@font-face {
+    font-family: 'icomoon';
+    src:    url('../fonts/icomoon.eot?aqjanj');
+    src:    url('../fonts/icomoon.eot?aqjanj#iefix') format('embedded-opentype'),
+		    url('../fonts/icomoon.ttf?aqjanj') format('truetype'),
+		    url('../fonts/icomoon.woff?aqjanj') format('woff'),
+		    url('../fonts/icomoon.svg?aqjanj#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-calendar:before {
+    content: "\e900";
+}

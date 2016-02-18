@@ -28,19 +28,42 @@ class PlanningController < ApplicationController
   def planning_by_people
     @users_grouped = Set.new
     @groups = Set.new
+    @projects = Set.new
+    @requesters = Set.new
+    @requesters_sector = Set.new
+
     if params[:dtini]
       @param_dtini = params[:dtini]
     end
     if params[:dtend]
       @param_dtend = params[:dtend]
     end
+
+    #activated_ids = params[:activated].collect {|id| id.to_i} if params[:activated]
+    filter_by_projects = params[:projects].collect { |id| id } if !params[:projects].nil?
+    #filter_by_projects_not_in = params[:filter_by_projects_not_in] if params[:filter_by_projects_not_in]
+    @param_projects_not_in = params[:filter_by_projects_not_in] if params[:filter_by_projects_not_in]
+    
+    @param_requester = params[:requester]
+    @param_requester_sector = params[:requester_sector]
+    
+
     users = User.active.order(:firstname)
     users.each_with_index { |user, index|
-       @users_grouped.add(PlanningHelper::planning_issue_by_user(user, index, @param_dtini, @param_dtend))
+       @users_grouped.add(PlanningHelper::planning_issue_by_user_advanced(user, index, @param_dtini, @param_dtend, 
+                                                                            @param_projects_not_in, filter_by_projects,
+                                                                            @param_requester, @param_requester_sector))
+
        user.groups.each { |group|
           @groups.add(group);
        }
+
     }
+
+    @requesters = CustomField.find(5).possible_values
+    @requesters_sector = CustomField.find(11).possible_values
+    @projects = Project.where(:parent_id => nil)
+
   end
 
   def planning_by_projects

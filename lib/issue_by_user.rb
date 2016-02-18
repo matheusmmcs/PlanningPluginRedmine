@@ -1,15 +1,20 @@
 class IssueByUser
   
-  attr_reader :user, :issues, :total_issues, :issues_ocomon, :issues_priority, :issues_status, :order, :total_paused, :total_unplanned, :total_overdue, :total_in_time, :total_paused_percent , :total_unplanned_percent, :total_overdue_percent, :total_in_time_percent
+  attr_reader :user, :issues, :total_issues, :verify_eq, :count_eq, :issues_ocomon, :issues_priority, :issues_requester, :issues_requester_sector, :issues_status, :order, :total_paused, :total_unplanned, :total_overdue, :total_in_time, :total_paused_percent , :total_unplanned_percent, :total_overdue_percent, :total_in_time_percent
      
-  def initialize(user, issues, total_issues, order)
+  def initialize(user, issues, total_issues, order, verify_eq, count_eq)
     @user = user
     @issues = issues
     @total_issues = total_issues
     @order = order
 
+    @verify_eq = verify_eq
+    @count_eq = count_eq
+
     @issues_ocomon = {}
     @issues_priority = {}
+    @issues_requester = {}
+    @issues_requester_sector = {}
     @issues_status = {}
     
     @total_paused = 0
@@ -45,6 +50,12 @@ class IssueByUser
               @issues_ocomon[issue.id.to_s] = field.value
             elsif field.custom_field.name.index("Prioridade") != -1
               @issues_priority[issue.id.to_s] = field.value
+            end
+            if field.custom_field.name.downcase == "solicitante"
+              @issues_requester[issue.id.to_s] = field.value
+            end
+            if field.custom_field.name.downcase == "setor solicitante"
+              @issues_requester_sector[issue.id.to_s] = field.value
             end
         }
       }

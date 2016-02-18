@@ -15,7 +15,8 @@
 				element: $this,
 				active: true,
 				countIssuesOpened : Number.parseInt($this.attr('data-issues-opened')),
-				countIssuesOverdue : Number.parseInt($this.attr('data-issues-overdue'))
+				countIssuesOverdue : Number.parseInt($this.attr('data-issues-overdue')),
+				countIssuesUnplanned : Number.parseInt($this.attr('data-issues-unplanned'))
 			});
 			$this.addClass('planning-user--active-animation');
 		});
@@ -85,7 +86,8 @@
 					//none
 					if ((filterIssue == 1 && user.countIssuesOpened > 0) ||
 						(filterIssue == 2 && user.countIssuesOpened == 0) ||
-						(filterIssue == 3 && user.countIssuesOverdue == 0)
+						(filterIssue == 3 && user.countIssuesOverdue == 0) ||
+						(filterIssue == 4 && user.countIssuesUnplanned == 0)
 					) {
 						user.active = false;
 					}
@@ -149,9 +151,16 @@
 
 		/* pattern to format date */
 		$('.datepicker-here').formatter({
-		  'pattern': '{{99-99-9999}}',
+		  'pattern': '{{99}}/{{99}}/{{9999}}',
 		  'persistent': false
 		});
 
+		/* Chosen config */
+		$('.chosen-select').chosen({
+			no_results_text:'Oops, sem resultados!',
+			allow_single_deselect: true
+			//disable_search_threshold: 10,
+		});
+	    
 	});
 })(jQuery);

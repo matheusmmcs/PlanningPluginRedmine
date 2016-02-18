@@ -25,7 +25,7 @@
 </div>
 
 <a href="#" class="arrow_down planning-user-details">
-	<%= l(:issues)%>
+	<%= l(:issues)%> | <%= data.count_eq %> (<%= data.verify_eq %>)
 </a>
 
 <table class="issue-table" style="display: none;">
@@ -36,6 +36,8 @@
 			<th style="width: 100px"><%= l(:start_date)%></th>
 			<th style="width: 100px"><%= l(:due_date)%></th>
 			<th style="width: 100px"><%= l(:spent_hours)%></th>
+			<th style="width: 100px"><%= l(:filter_by_issues_requester)%></th>
+			<th style="width: 100px"><%= l(:filter_by_issues_requester_sector)%></th>
 			<th style="width: 100px"><%= l(:ocomon)%></th>
 			<th style="width: 100px"><%= l(:priority)%></th>
 		</tr>
@@ -53,8 +55,25 @@
 				<td style="text-align: center;"><%= issue.due_date.strftime('%d/%m/%Y') unless issue.due_date.nil? %></td>
 				<td ><%= issue.spent_hours > 0 ? (link_to l_hours(issue.spent_hours), {:controller => 'timelog', :action => 'index', :project_id => issue.project, :issue_id => issue}) : "-" %></td>
 
+				<td style="text-align: center">
+					
+						<%= data.issues_requester[issue.id.to_s] %>
+					
+				</td>
 
-				<td style="text-align: center"><%= (!data.issues_ocomon[issue.id.to_s].nil? && data.issues_ocomon[issue.id.to_s].length > 0 && data.issues_ocomon[issue.id.to_s]) || '-' %></td>
+				<td style="text-align: center">
+					
+						<%= data.issues_requester_sector[issue.id.to_s] %>
+					
+				</td>
+
+				<td style="text-align: center">
+					<% if (!data.issues_ocomon[issue.id.to_s].nil? && data.issues_ocomon[issue.id.to_s].length > 0) %>
+						<a href="https://ocomon.sefaz.pi.gov.br/ocomon/geral/mostra_consulta.php?numero=<%= data.issues_ocomon[issue.id.to_s] %>" target="_blank"><%= data.issues_ocomon[issue.id.to_s] %></a>
+					<% else %>
+						-
+					<% end %>
+				</td>
 				<td style="text-align: center"><%= data.issues_priority[issue.id.to_s] || '-' %></td>
 
 			</tr>	

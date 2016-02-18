@@ -6,6 +6,6 @@ Datepicker.language['pt-br'] = {
     monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
     today: 'Hoje',
     clear: 'Limpar',
-    dateFormat: 'dd-mm-yyyy',
+    dateFormat: 'dd/mm/yyyy',
     firstDay: 0
 };

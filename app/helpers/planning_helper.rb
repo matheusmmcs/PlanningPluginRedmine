@@ -16,20 +16,97 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 require_dependency 'query'
+require 'cgi'
 require 'date'
 
 module PlanningHelper
+
+  def self.planning_issue_by_user(user)
+    self.planning_issue_by_user_advanced(user, nil, nil, nil, nil, nil)
+  end
   
-  def self.planning_issue_by_user(user, index = 0, dtini, dtend)
+  def self.planning_issue_by_user_advanced(user, index = 0, dtini, dtend, filter_by_projects_not_in, projects, requester, requester_sector)
     #datas acima dos limites para evitar ifs de datas nulas
-    dtini = "15-04-2000" if dtini.nil? || dtini.empty?
-    dtend = "15-04-2999" if dtend.nil? || dtend.empty?
-    dtini = Date.strptime(dtini, "%d-%m-%Y")
-    dtend = Date.strptime(dtend, "%d-%m-%Y")
+    dtini = "15/04/2000" if dtini.nil? || dtini.empty?
+    dtend = "15/04/2999" if dtend.nil? || dtend.empty?
+    dtini = Date.strptime(dtini, "%d/%m/%Y")
+    dtend = Date.strptime(dtend, "%d/%m/%Y")
+
+    requester = "" if requester.nil?
+    requester_sector = "" if requester_sector.nil?
+
     query = "assigned_to_id = :user AND start_date >= :dtini AND start_date <= :dtend"
-    issues = Issue.open.includes(:status).where(query, { user: user, dtini: dtini, dtend: dtend })
-    total_issues = Issue.where(query, { user: user, dtini: dtini, dtend: dtend }).count()
-    IssueByUser.new(user, issues, total_issues, index)
+
+    #query += " AND :requester"
+
+    if !projects.nil? && !projects.empty?
+      if filter_by_projects_not_in == "true"
+        query += " AND project_id NOT IN (:projects)"
+      else
+        query += " AND project_id IN (:projects)"
+      end
+    end
+
+    issues = Issue.open.includes(:status).where(query, { user: user, dtini: dtini, dtend: dtend, projects: projects })
+
+
+    # VERIFY CUSTOM FIELDS
+
+    issues_filtred = Set.new
+    verify_eq = 0
+    sum_test = 0
+    if (!requester.nil? && !requester.empty?)
+      verify_eq = verify_eq.succ
+      verify_req = true
+    end
+    if (!requester_sector.nil? && !requester_sector.empty?)
+      verify_eq = verify_eq.succ
+      verify_req_sec = true
+    end
+
+    logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+    #logger.info { "verify_eq #{verify_eq}, verify_req #{verify_req} -> requester #{CGI.unescapeHTML(requester.upcase)}, requester_sector #{CGI.unescapeHTML(requester_sector.upcase)} " }
+
+    issues = issues.each{ |issue|
+      count_eq = 0
+      
+      issue.custom_field_values.each{ |field_value|
+        f_id = field_value.custom_field.id
+        f_value = field_value.value
+
+        if (verify_req == true && f_id == 5 && !f_value.nil? && f_value.upcase == CGI.unescapeHTML(requester.upcase))
+          count_eq += 1
+          sum_test += 1
+        end
+
+        if (verify_req_sec == true && f_id == 11 && !f_value.nil? && f_value.upcase == CGI.unescapeHTML(requester_sector.upcase))
+          count_eq += 1
+          sum_test += 1
+        end
+      }
+
+      if count_eq == verify_eq
+        issues_filtred.add(issue)
+      end
+    }
+
+
+    #if (!requester.nil? && !requester.empty?)
+    #  issues = issues.includes(custom_field_values: :custom_field).where(custom_field: { id: 5}, custom_field_values: { value: CGI.unescapeHTML(requester) })
+    #end
+
+    #if (!requester_sector.nil? && !requester_sector.empty?)
+    #  issues = issues.joins(custom_field_values: :custom_field).where(custom_field: { id: 11}, custom_field_values: { value: CGI.unescapeHTML(requester_sector) })
+    #end
+
+
+    total_issues = Issue.where(query, { user: user, dtini: dtini, dtend: dtend, projects: projects }).count()
+
+    #project_id
+
+    #issue_condition += ' and project_id in (?) ' unless project_list.nil?
+    
+    IssueByUser.new(user, issues_filtred, total_issues, index, verify_eq, sum_test)
   end
   
   module VersionPatch
