@@ -21,8 +21,10 @@ require 'date'
 
 module PlanningHelper
 
+
+
   def self.planning_issue_by_user(user)
-    self.planning_issue_by_user_advanced(user, nil, nil, nil, nil, nil)
+    self.planning_issue_by_user_advanced(user, nil, nil, nil, nil, nil, nil, nil)
   end
   
   def self.planning_issue_by_user_advanced(user, index = 0, dtini, dtend, filter_by_projects_not_in, projects, requester, requester_sector)

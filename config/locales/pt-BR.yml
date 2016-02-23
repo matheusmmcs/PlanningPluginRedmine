@@ -54,7 +54,7 @@ pt-BR:
   newsearch: Busca Parametrizada
   newsearch_dtini: Data Inicial
   newsearch_dtend: Data Final
-  newsearch_btn: Realizar Nova Busca
+  newsearch_btn: Aplicar
   newsearch_projects: Selecione o(s) projeto(s) desejados
   newsearch_projects_exclude: Todos os projetos, exceto os selecionados
 

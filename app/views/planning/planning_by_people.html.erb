@@ -16,6 +16,42 @@
 	</fieldset>
 
 	<div class="planning-config">
+
+		<div class="planning-config-content">
+			<h3 class="planning-config-title"><%= l(:filters) %>:</h3>
+			<div class="planning-config-field">
+				<label class="planning-config-field-label"><%= l(:filter_by_unity) %>:</label>
+				<div class="planning-config-field-input">
+					<% @groups.sort{|x,y| x.id <=> y.id}.each { |data| %>
+						<label>
+					      <input name="filtro-unidades" value="<%= data.id %>" type="checkbox" /> 
+					      <span><%= data.name %></span>
+					    </label>
+					<% } %>
+				</div>
+			</div>
+			<div class="planning-config-field">
+				<div class="planning-w50p">
+					<label class="planning-config-field-label"><%= l(:filter_by_name) %>:</label>
+					<input class="planning-input-text" type="text" name="filtro-username" />
+				</div>
+				<div class="planning-w50p">
+					<label class="planning-config-field-label"><%= l(:filter_by_issues) %>:</label>
+					<div class="planning-config-field-input">
+						<select name="filtro-issues"  class="planning-select">
+							<option value="0"> <%= l(:all) %> </option>
+							<option value="1"> <%= l(:filter_by_issues_none) %> </option>
+							<option value="2"> <%= l(:filter_by_issues_with) %> </option>
+							<option value="3"> <%= l(:filter_by_issues_overdue) %> </option>
+							<option value="4"> <%= l(:filter_by_issues_unplanned) %> </option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<hr/>
+
 		<div class="planning-config-content">
 			<h3 class="planning-config-title"><%= l(:newsearch) %>:</h3>
 			<%= form_tag({:controller => "planning", :action => "planning_by_people"}, :method => "get") do %>
@@ -101,41 +137,6 @@
 					<%= button_tag l(:newsearch_btn), class: 'planning-btn planning-btn-primary' %>
 				</div>
 			<% end %>
-		</div>
-
-		<hr/>
-
-		<div class="planning-config-content">
-			<h3 class="planning-config-title"><%= l(:filters) %>:</h3>
-			<div class="planning-config-field">
-				<label class="planning-config-field-label"><%= l(:filter_by_unity) %>:</label>
-				<div class="planning-config-field-input">
-					<% @groups.sort{|x,y| x.id <=> y.id}.each { |data| %>
-						<label>
-					      <input name="filtro-unidades" value="<%= data.id %>" type="checkbox" /> 
-					      <span><%= data.name %></span>
-					    </label>
-					<% } %>
-				</div>
-			</div>
-			<div class="planning-config-field">
-				<div class="planning-w50p">
-					<label class="planning-config-field-label"><%= l(:filter_by_name) %>:</label>
-					<input class="planning-input-text" type="text" name="filtro-username" />
-				</div>
-				<div class="planning-w50p">
-					<label class="planning-config-field-label"><%= l(:filter_by_issues) %>:</label>
-					<div class="planning-config-field-input">
-						<select name="filtro-issues"  class="planning-select">
-							<option value="0"> <%= l(:all) %> </option>
-							<option value="1"> <%= l(:filter_by_issues_none) %> </option>
-							<option value="2"> <%= l(:filter_by_issues_with) %> </option>
-							<option value="3"> <%= l(:filter_by_issues_overdue) %> </option>
-							<option value="4"> <%= l(:filter_by_issues_unplanned) %> </option>
-						</select>
-					</div>
-				</div>
-			</div>
 		</div>
 
 	</div>
