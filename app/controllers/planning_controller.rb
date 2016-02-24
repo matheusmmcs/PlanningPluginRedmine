@@ -40,16 +40,26 @@ class PlanningController < ApplicationController
     end
 
     #activated_ids = params[:activated].collect {|id| id.to_i} if params[:activated]
-    filter_by_projects = params[:projects].collect { |id| id } if !params[:projects].nil?
-    @param_projects_not_in = params[:filter_by_projects_not_in] if params[:filter_by_projects_not_in]
+    @param_projects = params[:projects].collect { |id| id } if !params[:projects].nil?
+
+    
+    logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+    
+    logger.info {"filter_by_projects_not_in:  #{params[:filter_by_projects_not_in]} / #{!params[:filter_by_projects_not_in].nil?}"}
+    logger.info {"param_projects:  #{@param_projects}"}
+
+    if !params[:filter_by_projects_not_in].nil?
+      @param_projects_not_in = params[:filter_by_projects_not_in]
+    else
+      @param_projects_not_in = false
+    end
     
     @param_requester = params[:requester]
     @param_requester_sector = params[:requester_sector]
 
     @param_groups = params[:groups].collect { |id| id } if !params[:groups].nil?
 
-    #logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
-    #logger.info {"@param_groups #{@param_groups}"}
+    
 
     users = User.active.order(:firstname)
     users.each_with_index { |user, index|
@@ -64,7 +74,7 @@ class PlanningController < ApplicationController
 
       if usercontainsgroup
         @users_grouped.add(PlanningHelper::planning_issue_by_user_advanced(user, index, @param_dtini, @param_dtend, 
-                                                                            @param_projects_not_in, filter_by_projects,
+                                                                            @param_projects_not_in, @param_projects,
                                                                             @param_requester, @param_requester_sector))
       end
     }

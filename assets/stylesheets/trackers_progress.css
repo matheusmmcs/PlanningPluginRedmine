@@ -236,16 +236,25 @@ fieldset#legend ul li {
 	text-transform: none;
 	overflow: visible;
 	box-sizing: border-box;
+
+	background: #DDD;
+    border: 1px solid #BBB;
+	transition: background 0.3s;
+}
+.planning-btn:hover {
+    background: #BBB;
 }
 .planning-btn.planning-btn-primary {
     color: #fff;
     background-color: #337ab7;
-    border-color: #2e6da4;
+    border-color: #1b4f7d;
 }
 .planning-btn.planning-btn-primary:hover {
     color: #fff;
-    background-color: #286090;
-    border-color: #204d74;
+    background-color: #1b4f7d;
+}
+.planning-btn.planning-btn-default {
+    
 }
 .planning-select {
 	margin: 0 5px 0 0;

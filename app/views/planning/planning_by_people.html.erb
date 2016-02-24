@@ -122,12 +122,14 @@
 					<div class="planning-config-field-input">
 
 						<%= 
-						select_tag "projects", options_from_collection_for_select(@projects, "id", "name"), multiple: true, class: 'chosen-select', prompt: "", data: { placeholder: l(:newsearch_projects) }
+						
+						select_tag "projects", options_from_collection_for_select(@projects, "id", "name", @param_projects), multiple: true, class: 'chosen-select', prompt: "", data: { placeholder: l(:newsearch_projects) }
 						%>
 
 					    <label>
-					    	<%= hidden_field_tag "filter_by_projects_not_in", "false" %>
- 							<%= check_box_tag "filter_by_projects_not_in", "true" %>
+					    	
+ 							<%= check_box_tag "filter_by_projects_not_in", "true", @param_projects_not_in %>
+
 					      	<span><%= l(:newsearch_projects_exclude) %></span>
 					    </label>
 					</div>
@@ -136,6 +138,7 @@
 
 				<div class="planning-config-field">
 					<%= button_tag l(:newsearch_btn), class: 'planning-btn planning-btn-primary' %>
+					<%= button_tag "Limpar", type: :reset, class: 'planning-btn planning-reset-form' %>
 				</div>
 			<% end %>
 		</div>

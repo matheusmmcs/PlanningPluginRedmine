@@ -49,6 +49,10 @@ module PlanningHelper
       end
     end
 
+    logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+    logger.info {"if1: #{!projects.nil? && !projects.empty?} / if2: #{filter_by_projects_not_in == "true"} / query:  #{query}"}
+
+
     issues = Issue.open.includes(:status).where(query, { user: user, dtini: dtini, dtend: dtend, projects: projects })
 
 
@@ -66,8 +70,6 @@ module PlanningHelper
       verify_req_sec = true
     end
 
-    logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
-    #logger.info { "verify_eq #{verify_eq}, verify_req #{verify_req} -> requester #{CGI.unescapeHTML(requester.upcase)}, requester_sector #{CGI.unescapeHTML(requester_sector.upcase)} " }
 
     issues = issues.each{ |issue|
       count_eq = 0

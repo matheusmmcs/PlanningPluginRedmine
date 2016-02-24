@@ -161,6 +161,20 @@
 			allow_single_deselect: true
 			//disable_search_threshold: 10,
 		});
-	    
+
+		/* Clear form */
+	    $('.planning-reset-form').on('click', function (e) {
+	    	e.preventDefault();
+	        $(this).closest('form')
+	            .find(':radio, :checkbox').removeAttr('checked').end()
+	            .find('textarea, :text, select').val('');
+
+	        console.log($(this).closest('form').find('.chosen-select'))
+	        $(this).closest('form').find('.chosen-select').val('').trigger('chosen:updated');
+
+	        return false;
+	    });
+
+
 	});
 })(jQuery);
