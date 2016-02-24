@@ -41,25 +41,36 @@ class PlanningController < ApplicationController
 
     #activated_ids = params[:activated].collect {|id| id.to_i} if params[:activated]
     filter_by_projects = params[:projects].collect { |id| id } if !params[:projects].nil?
-    #filter_by_projects_not_in = params[:filter_by_projects_not_in] if params[:filter_by_projects_not_in]
     @param_projects_not_in = params[:filter_by_projects_not_in] if params[:filter_by_projects_not_in]
     
     @param_requester = params[:requester]
     @param_requester_sector = params[:requester_sector]
-    
+
+    @param_groups = params[:groups].collect { |id| id } if !params[:groups].nil?
+
+    #logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+    #logger.info {"@param_groups #{@param_groups}"}
 
     users = User.active.order(:firstname)
     users.each_with_index { |user, index|
-       @users_grouped.add(PlanningHelper::planning_issue_by_user_advanced(user, index, @param_dtini, @param_dtend, 
+
+      usercontainsgroup = @param_groups.nil?
+      user.groups.each { |group|
+        if (!@param_groups.nil? && @param_groups.include?(group.id.to_s))
+          usercontainsgroup = true
+          break
+        end
+      }
+
+      if usercontainsgroup
+        @users_grouped.add(PlanningHelper::planning_issue_by_user_advanced(user, index, @param_dtini, @param_dtend, 
                                                                             @param_projects_not_in, filter_by_projects,
                                                                             @param_requester, @param_requester_sector))
-
-       user.groups.each { |group|
-          @groups.add(group);
-       }
-
+      end
     }
 
+
+    @groups = Group.where.not( :id => [107,108] )
     @requesters = CustomField.find(5).possible_values
     @requesters_sector = CustomField.find(11).possible_values
     @projects = Project.where(:parent_id => nil)

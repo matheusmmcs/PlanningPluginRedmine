@@ -20,17 +20,6 @@
 		<div class="planning-config-content">
 			<h3 class="planning-config-title"><%= l(:filters) %>:</h3>
 			<div class="planning-config-field">
-				<label class="planning-config-field-label"><%= l(:filter_by_unity) %>:</label>
-				<div class="planning-config-field-input">
-					<% @groups.sort{|x,y| x.id <=> y.id}.each { |data| %>
-						<label>
-					      <input name="filtro-unidades" value="<%= data.id %>" type="checkbox" /> 
-					      <span><%= data.name %></span>
-					    </label>
-					<% } %>
-				</div>
-			</div>
-			<div class="planning-config-field">
 				<div class="planning-w50p">
 					<label class="planning-config-field-label"><%= l(:filter_by_name) %>:</label>
 					<input class="planning-input-text" type="text" name="filtro-username" />
@@ -56,6 +45,18 @@
 			<h3 class="planning-config-title"><%= l(:newsearch) %>:</h3>
 			<%= form_tag({:controller => "planning", :action => "planning_by_people"}, :method => "get") do %>
 				
+				<div class="planning-config-field">
+					<label class="planning-config-field-label"><%= l(:filter_by_unity) %>:</label>
+					<div class="planning-config-field-input">
+
+						<%  @groups.sort{|x,y| x.id <=> y.id}.each { |data| %>
+					    	<%= check_box_tag 'groups[]', data.id, (!@param_groups.nil? && @param_groups.include?(data.id.to_s)), :id => data.id %>
+					         <span><%= data.name %></span>
+					    <% } %>
+
+					</div>
+				</div>
+
 				<div class="planning-config-field">
 					<div class="planning-w50p">
 						<label class="planning-config-field-label"><%= l(:newsearch_dtini) %>:</label>

@@ -12,7 +12,7 @@
 					<%= image_tag('projects.png', :plugin => 'planning_plugin_redmine') %>
 				<% end %>
 
-				<%= link_to options={:controller => 'planning', :action => 'planning_by_people'} do %>
+				<%= link_to options={:controller => 'planning', :action => 'planning_by_people', :groups => [4]} do %>
 					<span><%= l(:people)%></span>
 					<%= image_tag('people.png', :plugin => 'planning_plugin_redmine') %>
 				<% end %>
