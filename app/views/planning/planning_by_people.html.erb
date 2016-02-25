@@ -86,6 +86,35 @@
 					</div>
 				</div>
 
+				<div class="planning-config-field">
+					<div class="planning-w50p">
+						<label class="planning-config-field-label"><%= l(:newsearch_dtini_estimated) %>:</label>
+						<div class="planning-config-field-input">
+
+							<div class="planning-input-group"> 
+								<div class="input-group-addon">
+									<span class="icon-calendar"></span>
+								</div>
+								<%= text_field_tag :dtini_estimated, @param_dtini_estimated, class: 'planning-input-text datepicker-here', :data => {:position => 'right top', :language => 'pt-br', :todayButton => 'true', :clearButton => 'true'} %>
+							</div>
+
+						</div>
+					</div>
+					<div class="planning-w50p">
+						<label class="planning-config-field-label"><%= l(:newsearch_dtend_estimated) %>:</label>
+						<div class="planning-config-field-input">
+
+							<div class="planning-input-group"> 
+								<div class="input-group-addon">
+									<span class="icon-calendar"></span>
+								</div>
+								<%= text_field_tag :dtend_estimated, @param_dtend_estimated, class: 'planning-input-text datepicker-here', :data => {:position => 'right top', :language => 'pt-br', :todayButton => 'true', :clearButton => 'true'} %>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
 
 				<div class="planning-config-field u-overflow-visible">
 
@@ -122,7 +151,7 @@
 					<div class="planning-config-field-input">
 
 						<%= 
-						
+
 						select_tag "projects", options_from_collection_for_select(@projects, "id", "name", @param_projects), multiple: true, class: 'chosen-select', prompt: "", data: { placeholder: l(:newsearch_projects) }
 						%>
 

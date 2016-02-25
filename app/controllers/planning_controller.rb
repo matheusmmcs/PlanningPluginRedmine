@@ -32,21 +32,14 @@ class PlanningController < ApplicationController
     @requesters = Set.new
     @requesters_sector = Set.new
 
-    if params[:dtini]
-      @param_dtini = params[:dtini]
-    end
-    if params[:dtend]
-      @param_dtend = params[:dtend]
-    end
+    @param_dtini = params[:dtini] if params[:dtini]
+    @param_dtend = params[:dtend] if params[:dtend]
+    @param_dtini_estimated = params[:dtini_estimated] if params[:dtini_estimated]
+    @param_dtend_estimated = params[:dtend_estimated] if params[:dtend_estimated]
 
     #activated_ids = params[:activated].collect {|id| id.to_i} if params[:activated]
-    @param_projects = params[:projects].collect { |id| id } if !params[:projects].nil?
-
-    
-    logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
-    
-    logger.info {"filter_by_projects_not_in:  #{params[:filter_by_projects_not_in]} / #{!params[:filter_by_projects_not_in].nil?}"}
-    logger.info {"param_projects:  #{@param_projects}"}
+    @param_projects = params[:projects].collect { |id| id }.delete_if { |id| id == "" } if !params[:projects].nil?
+    #@param_projects = @param_projects - [""] if !@param_projects.nil?
 
     if !params[:filter_by_projects_not_in].nil?
       @param_projects_not_in = params[:filter_by_projects_not_in]
@@ -57,9 +50,18 @@ class PlanningController < ApplicationController
     @param_requester = params[:requester]
     @param_requester_sector = params[:requester_sector]
 
-    @param_groups = params[:groups].collect { |id| id } if !params[:groups].nil?
-
+    @param_groups = params[:groups].collect { |id| id }.delete_if { |id| id == "" } if !params[:groups].nil?
+    #@param_groups = @param_groups - [""] if !@param_groups.nil?
     
+
+    #logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+    #logger.info {"@param_dtini:  #{@param_dtini};"}
+    #logger.info {"@param_dtend:  #{@param_dtend};"}
+    #logger.info {"@param_projects:  #{@param_projects};"}
+    #logger.info {"@param_projects_not_in:  #{@param_projects_not_in};"}
+    #logger.info {"@param_requester:  #{@param_requester};"}
+    #logger.info {"@param_requester_sector:  #{@param_requester_sector};"}
+    #logger.info {"@param_groups:  #{@param_groups};"}
 
     users = User.active.order(:firstname)
     users.each_with_index { |user, index|
@@ -73,9 +75,12 @@ class PlanningController < ApplicationController
       }
 
       if usercontainsgroup
-        @users_grouped.add(PlanningHelper::planning_issue_by_user_advanced(user, index, @param_dtini, @param_dtend, 
-                                                                            @param_projects_not_in, @param_projects,
-                                                                            @param_requester, @param_requester_sector))
+        @users_grouped.add(PlanningHelper::planning_issue_by_user_advanced(
+          user, index, @param_dtini, @param_dtend, 
+          @param_dtini_estimated, @param_dtend_estimated,
+          @param_projects_not_in, @param_projects,
+          @param_requester, @param_requester_sector)
+        )
       end
     }
 

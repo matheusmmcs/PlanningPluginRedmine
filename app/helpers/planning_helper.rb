@@ -24,22 +24,37 @@ module PlanningHelper
 
 
   def self.planning_issue_by_user(user)
-    self.planning_issue_by_user_advanced(user, nil, nil, nil, nil, nil, nil, nil)
+    self.planning_issue_by_user_advanced(user, nil, nil, nil, nil, nil, nil, nil, nil, nil)
+  end
+
+  def self.format_date(date)
+    return Date.strptime(date, "%d/%m/%Y") if !date.nil? && !date.empty?
   end
   
-  def self.planning_issue_by_user_advanced(user, index = 0, dtini, dtend, filter_by_projects_not_in, projects, requester, requester_sector)
+  def self.planning_issue_by_user_advanced(user, index = 0, dtini, dtend, dtini_estimated, dtend_estimated, filter_by_projects_not_in, projects, requester, requester_sector)
     #datas acima dos limites para evitar ifs de datas nulas
-    dtini = "15/04/2000" if dtini.nil? || dtini.empty?
-    dtend = "15/04/2999" if dtend.nil? || dtend.empty?
-    dtini = Date.strptime(dtini, "%d/%m/%Y")
-    dtend = Date.strptime(dtend, "%d/%m/%Y")
+
+    logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+
+    logger.info { "dtini: #{dtini}" }
+    logger.info { "dtend: #{dtend}" }
+    logger.info { "dtini_estimated: #{dtini_estimated}" }
+    logger.info { "dtend_estimated: #{dtend_estimated}" }
+
+    dtini = self.format_date(dtini)
+    dtend = self.format_date(dtend)
+    dtini_estimated = self.format_date(dtini_estimated)
+    dtend_estimated = self.format_date(dtend_estimated)
+
 
     requester = "" if requester.nil?
     requester_sector = "" if requester_sector.nil?
 
-    query = "assigned_to_id = :user AND start_date >= :dtini AND start_date <= :dtend"
-
-    #query += " AND :requester"
+    query = "assigned_to_id = :user"
+    query += " AND (:dtini is NULL OR start_date >= :dtini)"
+    query += " AND (:dtend is NULL OR start_date <= :dtend)"
+    query += " AND (:dtini_estimated is NULL OR due_date >= :dtini_estimated)"
+    query += " AND (:dtend_estimated is NULL OR due_date <= :dtend_estimated)"
 
     if !projects.nil? && !projects.empty?
       if filter_by_projects_not_in == "true"
@@ -49,11 +64,15 @@ module PlanningHelper
       end
     end
 
-    logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
-    logger.info {"if1: #{!projects.nil? && !projects.empty?} / if2: #{filter_by_projects_not_in == "true"} / query:  #{query}"}
+    #logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+    #logger.info {"if1: #{!projects.nil? && !projects.empty?} / if2: #{filter_by_projects_not_in == "true"} / query:  #{query}"}
 
 
-    issues = Issue.open.includes(:status).where(query, { user: user, dtini: dtini, dtend: dtend, projects: projects })
+    issues = Issue.open.includes(:status).where(query, { 
+      user: user, projects: projects, 
+      dtini: dtini, dtend: dtend, 
+      dtini_estimated: dtini_estimated, dtend_estimated: dtend_estimated
+    })
 
 
     # VERIFY CUSTOM FIELDS
@@ -104,7 +123,7 @@ module PlanningHelper
     #end
 
 
-    total_issues = Issue.where(query, { user: user, dtini: dtini, dtend: dtend, projects: projects }).count()
+    total_issues = Issue.where(query, { user: user, dtini: dtini, dtend: dtend, dtini_estimated: dtini_estimated, dtend_estimated: dtend_estimated, projects: projects }).count()
 
     #project_id
 

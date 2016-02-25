@@ -170,7 +170,7 @@
 	            .find('textarea, :text, select').val('');
 
 	        console.log($(this).closest('form').find('.chosen-select'))
-	        $(this).closest('form').find('.chosen-select').val('').trigger('chosen:updated');
+	        $(this).closest('form').find('.chosen-select').val(null).trigger('chosen:updated');
 
 	        return false;
 	    });

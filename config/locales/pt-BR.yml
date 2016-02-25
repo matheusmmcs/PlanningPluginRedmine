@@ -37,7 +37,7 @@ pt-BR:
 
   # Filter
   filters: Filtros
-  filter_by_unity: Por Unidades
+  filter_by_unity: Colaboradores da(s) Unidade(s)
   filter_by_name: Pelo Nome do Colaborador
   filter_by_issues: Estado das Tarefas
   filter_by_issues_none: Sem Tarefas Abertas
@@ -45,17 +45,19 @@ pt-BR:
   filter_by_issues_overdue: Com Tarefas Atrasadas
   filter_by_issues_unplanned: Com Tarefas Sem Data
 
-  filter_by_issues_requester: Por Solicitante
+  filter_by_issues_requester: Tarefas solicitadas por
   filter_by_issues_requester_palceholder: Selecione o Solicitante desejado
-  filter_by_issues_requester_sector: Por Setor Solicitante
+  filter_by_issues_requester_sector: Tarefas com solicitante do Setor
   filter_by_issues_requester_sector_palceholder: Selecione o Setor do Solicitante desejado
 
 
   newsearch: Busca Parametrizada
-  newsearch_dtini: Data Inicial
-  newsearch_dtend: Data Final
+  newsearch_dtini: Data de Criação (A partir de)
+  newsearch_dtend: Data de Criação (Até)
+  newsearch_dtini_estimated: Data Estimada para Conclusão (A partir de)
+  newsearch_dtend_estimated: Data Estimada para Conclusão (Até)
   newsearch_btn: Aplicar
-  newsearch_projects: Selecione o(s) projeto(s) desejados
+  newsearch_projects: Tarefas do(s) projeto(s)
   newsearch_projects_exclude: Todos os projetos, exceto os selecionados
 
   # General
