@@ -1,5 +1,6 @@
 (function($){
 	$(document).ready(function(){
+
 		var $users = $('.planning-user'),
 			$filterName = $('[name="filtro-username"]'),
 			users = [];
@@ -33,6 +34,10 @@
 		        str = str.replace(/[^A-Z0-9]/gi,'');
 		    }
 		    return str;
+		}
+
+		var initialize = function() {
+			filterUsers();
 		}
 
 		var filterUsers = function() {
@@ -149,6 +154,34 @@
 			$(this).hide();
 		});
 
+		/* Abrir / Fechar todas as tarefas */
+		$('.planning-expand-form').on('click', function(e) {
+			e.preventDefault();
+			openIssuesDetails();
+			$('.planning-expand-form').addClass('u-hide');
+			$('.planning-compress-form').removeClass('u-hide');
+		});
+
+		$('.planning-compress-form').on('click', function(e) {
+			e.preventDefault();
+			closeIssuesDetails();
+			$('.planning-compress-form').addClass('u-hide');
+			$('.planning-expand-form').removeClass('u-hide');
+		});
+
+		function openIssuesDetails() {
+			$('.planning-user-details.arrow_down').each(function(){
+				$(this).click();
+			});
+		}
+
+		function closeIssuesDetails() {
+			$('.planning-user-details.arrow_up').each(function(){
+				$(this).click();
+			});
+		}
+
+
 		/* pattern to format date */
 		$('.datepicker-here').formatter({
 		  'pattern': '{{99}}/{{99}}/{{9999}}',
@@ -175,6 +208,8 @@
 	        return false;
 	    });
 
+
+	    initialize();
 
 	});
 })(jQuery);

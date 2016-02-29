@@ -28,9 +28,9 @@
 					<label class="planning-config-field-label"><%= l(:filter_by_issues) %>:</label>
 					<div class="planning-config-field-input">
 						<select name="filtro-issues"  class="planning-select">
+							<option value="2"> <%= l(:filter_by_issues_with) %> </option>
 							<option value="0"> <%= l(:all) %> </option>
 							<option value="1"> <%= l(:filter_by_issues_none) %> </option>
-							<option value="2"> <%= l(:filter_by_issues_with) %> </option>
 							<option value="3"> <%= l(:filter_by_issues_overdue) %> </option>
 							<option value="4"> <%= l(:filter_by_issues_unplanned) %> </option>
 						</select>
@@ -168,6 +168,9 @@
 				<div class="planning-config-field">
 					<%= button_tag l(:newsearch_btn), class: 'planning-btn planning-btn-primary' %>
 					<%= button_tag "Limpar", type: :reset, class: 'planning-btn planning-reset-form' %>
+
+					<a href="#" class="planning-btn planning-expand-form">Expandir Tarefas</a>
+					<a href="#" class="planning-btn planning-compress-form u-hide">Comprimir Tarefas</a>
 				</div>
 			<% end %>
 		</div>

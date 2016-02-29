@@ -213,7 +213,7 @@ fieldset#legend ul li {
 .planning-redmine .chosen-container-single .chosen-single abbr {
 	top: 10px;
 }
-.planning-btn {
+.planning-btn, a.planning-btn {
 	margin-right: 0 5px 0 0;
 	display: inline-block;
 	padding: 6px 12px;
@@ -237,12 +237,16 @@ fieldset#legend ul li {
 	overflow: visible;
 	box-sizing: border-box;
 
+	color: #333;
+	text-decoration: none;
+
 	background: #DDD;
     border: 1px solid #BBB;
 	transition: background 0.3s;
 }
-.planning-btn:hover {
+.planning-btn:hover, a.planning-btn:hover {
     background: #BBB;
+    text-decoration: none;
 }
 .planning-btn.planning-btn-primary {
     color: #fff;
@@ -368,11 +372,21 @@ fieldset#legend ul li {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
 }
+.witdh-col-min {
+	width: 8%;
+	text-align: center;
+}
+.witdh-col-large {
+	width: 36%;
+}
 
 
 /* UTILS */
 .u-overflow-visible {
 	overflow: visible !important;
+}
+.u-hide {
+	display: none !important;
 }
 
 
@@ -407,3 +421,47 @@ fieldset#legend ul li {
 .icon-calendar:before {
     content: "\e900";
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+table.scroll {
+    width: 100%;
+    border-spacing: 0;
+    border: 2px solid black;
+}
+
+table.scroll tbody,
+table.scroll thead { display: block; }
+
+table.scroll thead tr th { 
+    height: 30px;
+    line-height: 30px;
+}
+
+table.scroll tbody {
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+table.scroll tbody { border-top: 2px solid black; }
+
+table.scroll tbody td, table.scroll thead th {
+    border-right: 1px solid black;
+}
+
+table.scroll tbody td:last-child, table.scroll thead th:last-child {
+    border-right: none;
+}
+*/

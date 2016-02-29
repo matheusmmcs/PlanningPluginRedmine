@@ -35,11 +35,7 @@ module PlanningHelper
     #datas acima dos limites para evitar ifs de datas nulas
 
     logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
-
-    logger.info { "dtini: #{dtini}" }
-    logger.info { "dtend: #{dtend}" }
-    logger.info { "dtini_estimated: #{dtini_estimated}" }
-    logger.info { "dtend_estimated: #{dtend_estimated}" }
+    #logger.info { "dtini: #{dtini}" }
 
     dtini = self.format_date(dtini)
     dtend = self.format_date(dtend)
@@ -64,10 +60,6 @@ module PlanningHelper
       end
     end
 
-    #logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
-    #logger.info {"if1: #{!projects.nil? && !projects.empty?} / if2: #{filter_by_projects_not_in == "true"} / query:  #{query}"}
-
-
     issues = Issue.open.includes(:status).where(query, { 
       user: user, projects: projects, 
       dtini: dtini, dtend: dtend, 
@@ -77,9 +69,16 @@ module PlanningHelper
 
     # VERIFY CUSTOM FIELDS
 
-    issues_filtred = Set.new
+    #logger.info { "----------" }
+    #logger.info { "Table name: #{CustomValue.table_name}" }
+    
+
+
     verify_eq = 0
     sum_test = 0
+
+    issues_filtred = Set.new
+    
     if (!requester.nil? && !requester.empty?)
       verify_eq = verify_eq.succ
       verify_req = true
@@ -93,6 +92,8 @@ module PlanningHelper
     issues = issues.each{ |issue|
       count_eq = 0
       
+      #logger.info { "custom_field_values: #{issue.custom_field_values}" }
+
       issue.custom_field_values.each{ |field_value|
         f_id = field_value.custom_field.id
         f_value = field_value.value
@@ -112,6 +113,8 @@ module PlanningHelper
         issues_filtred.add(issue)
       end
     }
+
+
 
 
     #if (!requester.nil? && !requester.empty?)
