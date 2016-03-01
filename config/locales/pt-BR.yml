@@ -72,6 +72,9 @@ pt-BR:
 
   related_issues: Tarefas Relacionadas
 
+  issues_opened: Tarefas Abertas
+  issues_closed_month: Tarefas Fechadas com previsão para o mês atual
+
   issue_opened_of: 
     zero: "%{count} Tarefa Aberta de "
     one: "%{count} Tarefa Aberta de "

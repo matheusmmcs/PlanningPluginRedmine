@@ -183,8 +183,7 @@
 		<div class="planning-user" data-issues-opened="<%= data.issues.length %>" data-issues-overdue="<%= data.total_overdue %>" data-issues-unplanned="<%= data.total_unplanned %>">
 			<a name="<%=data.user.id%>"/>
 			<h3>
-				<%= link_to_user(data.user) %> 
-				<small>- <%=l(:issue_opened_of, :count => data.issues.length) %> <%= l(:issue_total, :count => data.total_issues )%> </small>
+				<%= link_to_user(data.user) %>
 			</h3>
 			<%= render :partial => 'people_progress', :locals => {:data => data} %>
 		</div>
@@ -201,8 +200,9 @@
 		<%= javascript_include_tag '../vendor/chosen_v1.5.0/chosen.jquery.min', :plugin => 'planning_plugin_redmine' %>
 
 		<!-- plugin -->
-	  	<%= stylesheet_link_tag 'trackers_progress', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+	  	<%= stylesheet_link_tag '../stylesheets-dist/trackers_progress_v1.0', :plugin => 'planning_plugin_redmine', :media => 'all' %>
 	  	<%= javascript_include_tag 'planning_by_people', :plugin => 'planning_plugin_redmine' %>
+	  	<%= javascript_include_tag 'issues_table', :plugin => 'planning_plugin_redmine' %>
 	<% end %>
 
 	<% html_title(l(:people_based_planning)) %>

@@ -68,14 +68,7 @@ module PlanningHelper
 
 
     # VERIFY CUSTOM FIELDS
-
-    #logger.info { "----------" }
-    #logger.info { "Table name: #{CustomValue.table_name}" }
-    
-
-
     verify_eq = 0
-    sum_test = 0
 
     issues_filtred = Set.new
     
@@ -100,12 +93,10 @@ module PlanningHelper
 
         if (verify_req == true && f_id == 5 && !f_value.nil? && f_value.upcase == CGI.unescapeHTML(requester.upcase))
           count_eq += 1
-          sum_test += 1
         end
 
         if (verify_req_sec == true && f_id == 11 && !f_value.nil? && f_value.upcase == CGI.unescapeHTML(requester_sector.upcase))
           count_eq += 1
-          sum_test += 1
         end
       }
 
@@ -114,25 +105,28 @@ module PlanningHelper
       end
     }
 
+    #busca por tarefas fechadas no mês atual
+
+#joins(:status).where("#{IssueStatus.table_name}.is_closed = ?", is_closed)
+#.open(false)
+
+    issues_closed = Set.new
+
+    today = Date.today
+    initDate = Date.new(today.year, today.month, 1)
+    lastDate = Date.new(today.year, today.month, -1)
+
+    query_opened = "assigned_to_id = :user"
+    query_opened += " AND (:dtini_estimated is NULL OR due_date >= :dtini_estimated)"
+    query_opened += " AND (:dtend_estimated is NULL OR due_date <= :dtend_estimated)"
+
+    issues_closed = Issue.open(false).includes(:status).where(query_opened, { 
+      user: user, dtini_estimated: initDate, dtend_estimated: lastDate
+    })
 
 
-
-    #if (!requester.nil? && !requester.empty?)
-    #  issues = issues.includes(custom_field_values: :custom_field).where(custom_field: { id: 5}, custom_field_values: { value: CGI.unescapeHTML(requester) })
-    #end
-
-    #if (!requester_sector.nil? && !requester_sector.empty?)
-    #  issues = issues.joins(custom_field_values: :custom_field).where(custom_field: { id: 11}, custom_field_values: { value: CGI.unescapeHTML(requester_sector) })
-    #end
-
-
-    total_issues = Issue.where(query, { user: user, dtini: dtini, dtend: dtend, dtini_estimated: dtini_estimated, dtend_estimated: dtend_estimated, projects: projects }).count()
-
-    #project_id
-
-    #issue_condition += ' and project_id in (?) ' unless project_list.nil?
     
-    IssueByUser.new(user, issues_filtred, total_issues, index, verify_eq, sum_test)
+    IssueByUser.new(user, issues_filtred, issues_closed, index)
   end
   
   module VersionPatch

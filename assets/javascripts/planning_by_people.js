@@ -20,6 +20,7 @@
 				countIssuesUnplanned : Number.parseInt($this.attr('data-issues-unplanned'))
 			});
 			$this.addClass('planning-user--active-animation');
+			$this.addClass('planning-user-closed--active-animation');
 		});
 
 		function normalizeString(str, preserveCaracters) {
@@ -123,25 +124,9 @@
 			filterUsers();
 		});
 
-		$('.planning-user-details').on('click', function(e) {
-			e.preventDefault();
-			var $this = $(this),
-				$planningUser = $this.closest('.planning-user'),
-				openClass = 'planning-user--active';
+		
 
-			if ($planningUser.hasClass(openClass)) {
-				$planningUser.removeClass(openClass);
-				$this.next().hide();
-				$this.removeClass('arrow_up');
-				$this.addClass('arrow_down');
-			} else {
-				$planningUser.addClass(openClass);
-				$this.next().show();
-				$this.addClass('arrow_up');
-				$this.removeClass('arrow_down');
-			}				
-		});
-
+		/* Leganda */
 		$('.planning-legend-close').on('click', function(e) {
 			e.preventDefault();
 			$('#legend').hide(); 
@@ -153,6 +138,7 @@
 			$('#legend').show(); 
 			$(this).hide();
 		});
+
 
 		/* Abrir / Fechar todas as tarefas */
 		$('.planning-expand-form').on('click', function(e) {
@@ -182,18 +168,26 @@
 		}
 
 
-		/* pattern to format date */
-		$('.datepicker-here').formatter({
-		  'pattern': '{{99}}/{{99}}/{{9999}}',
-		  'persistent': false
-		});
+
+		/* Pattern to format date */
+		if ($.fn.formatter) {
+			$('.datepicker-here').formatter({
+			  'pattern': '{{99}}/{{99}}/{{9999}}',
+			  'persistent': false
+			});
+		}
+		
+
 
 		/* Chosen config */
-		$('.chosen-select').chosen({
-			no_results_text:'Oops, sem resultados!',
-			allow_single_deselect: true
-			//disable_search_threshold: 10,
-		});
+		if ($.fn.chosen) {
+			$('.chosen-select').chosen({
+				no_results_text:'Oops, sem resultados!',
+				allow_single_deselect: true
+				//disable_search_threshold: 10,
+			});
+		}
+
 
 		/* Clear form */
 	    $('.planning-reset-form').on('click', function (e) {
