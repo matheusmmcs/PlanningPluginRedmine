@@ -116,9 +116,10 @@ module PlanningHelper
     initDate = Date.new(today.year, today.month, 1)
     lastDate = Date.new(today.year, today.month, -1)
 
-    query_opened = "assigned_to_id = :user"
-    query_opened += " AND (:dtini_estimated is NULL OR due_date >= :dtini_estimated)"
-    query_opened += " AND (:dtend_estimated is NULL OR due_date <= :dtend_estimated)"
+    #TODO: area administrativa para controlar situações, nesse caso = fechada
+    query_opened = "assigned_to_id = :user AND status_id = 5"
+    query_opened += " AND (:dtini_estimated is NULL OR closed_on >= :dtini_estimated)"
+    query_opened += " AND (:dtend_estimated is NULL OR closed_on <= :dtend_estimated)"
 
     issues_closed = Issue.open(false).includes(:status).where(query_opened, { 
       user: user, dtini_estimated: initDate, dtend_estimated: lastDate
