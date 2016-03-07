@@ -51,17 +51,12 @@ class PlanningController < ApplicationController
     @param_requester_sector = params[:requester_sector]
 
     @param_groups = params[:groups].collect { |id| id }.delete_if { |id| id == "" } if !params[:groups].nil?
-    #@param_groups = @param_groups - [""] if !@param_groups.nil?
-    
 
-    #logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
-    #logger.info {"@param_dtini:  #{@param_dtini};"}
-    #logger.info {"@param_dtend:  #{@param_dtend};"}
-    #logger.info {"@param_projects:  #{@param_projects};"}
-    #logger.info {"@param_projects_not_in:  #{@param_projects_not_in};"}
-    #logger.info {"@param_requester:  #{@param_requester};"}
-    #logger.info {"@param_requester_sector:  #{@param_requester_sector};"}
-    #logger.info {"@param_groups:  #{@param_groups};"}
+
+    logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+
+    @count_issues_opened = 0
+    @count_issues_closed = 0
 
     users = User.active.order(:firstname)
     users.each_with_index { |user, index|
@@ -75,12 +70,17 @@ class PlanningController < ApplicationController
       }
 
       if usercontainsgroup
-        @users_grouped.add(PlanningHelper::planning_issue_by_user_advanced(
+        planning = PlanningHelper::planning_issue_by_user_advanced(
           user, index, @param_dtini, @param_dtend, 
           @param_dtini_estimated, @param_dtend_estimated,
           @param_projects_not_in, @param_projects,
           @param_requester, @param_requester_sector)
-        )
+
+        @users_grouped.add(planning)
+
+        @count_issues_opened += planning.issues.length
+        @count_issues_closed += planning.issues_closed.length
+        
       end
     }
 
@@ -97,6 +97,7 @@ class PlanningController < ApplicationController
 
     @user_synthesis = Hash.new
 
+    ActiveRecord::Base.logger = Logger.new("/u01/redmine/redmine/log/sql.log", shift_age = 7, shift_size = 1048576)
     logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
 
     if @queryPlanning.has_filter?('tracker_id')
@@ -185,7 +186,9 @@ class PlanningController < ApplicationController
     
 
     @queryPlanning = Query.new(:name => "_", :filters => {})
+    #projetos
     user_projects = Project.visible
+    #tipos de tarefas (suporte, corretiva, evolutiva, adaptativa, etc.)
     user_trackers = Tracker.all
 
     filters = Hash.new

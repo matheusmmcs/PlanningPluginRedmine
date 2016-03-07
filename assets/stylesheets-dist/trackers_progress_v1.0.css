@@ -128,6 +128,7 @@ fieldset#legend {
 	border: 1px solid #CCCCCC;
 	padding: 20px;
 	box-shadow: 2px 3px 10px #CCC;
+	z-index: 99;
 }
 fieldset#legend ul {
 	list-style: none;
@@ -296,6 +297,27 @@ fieldset#legend ul li {
 }
 .planning-config-field-input label:last-child {
 	margin-right: 0;
+}
+
+
+.planning-summary {
+	width: 98%;
+	position: relative;
+	background: #F1F1F1;
+	border: 1px solid #CCC;
+	padding: 2%;
+	margin: 10px 1%;
+	min-height: 100px;
+	box-shadow: 2px 2px 5px #CCC;
+}
+.planning-summary-title {
+	border-bottom: 1px solid #DDD;
+	padding-bottom: 10px;
+}
+.planning-summary span {
+	margin-right: 10px;
+	padding-right: 15px;
+	border-right: 1px solid #DDD;
 }
 
 

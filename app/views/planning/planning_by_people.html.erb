@@ -179,6 +179,16 @@
 
 	<hr/>
 
+	<div class="planning-summary">
+		<h3 class="planning-summary-title">Sumário:</h3>
+		<strong>Total de Tarefas Abertas:</strong>
+		<span><%= @count_issues_opened %></span>
+		<strong>Total de Tarefas Fechadas no Mês:</strong>
+		<span><%= @count_issues_closed %></span>
+	</div>
+
+	<hr/>
+
 	<% @users_grouped.sort{|x,y| x.order <=> y.order}.each { |data| %>
 		<div class="planning-user" data-issues-opened="<%= data.issues.length %>" data-issues-overdue="<%= data.total_overdue %>" data-issues-unplanned="<%= data.total_unplanned %>">
 			<a name="<%=data.user.id%>"/>
