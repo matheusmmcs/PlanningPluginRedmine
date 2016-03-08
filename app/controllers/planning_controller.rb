@@ -24,6 +24,14 @@ class PlanningController < ApplicationController
   before_filter :authorize_planning
   
   include QueriesHelper
+
+  module TaskStatusEnum
+    ALL = "0"
+    WITHOUT_ISSUES_OPENED = "1"
+    WITH_ISSUES_OPENED = "2"
+    WITH_ISSUES_OVERDUE = "3"
+    WITH_ISSUES_UNPLANNED = "4"
+  end
   
   def planning_by_people
     @users_grouped = Set.new
@@ -32,28 +40,34 @@ class PlanningController < ApplicationController
     @requesters = Set.new
     @requesters_sector = Set.new
 
+
+    @param_username = params[:username] if params[:username]
+    if !params[:issues_status].nil?
+      @param_issues_status = params[:issues_status] 
+    else 
+      @param_issues_status = TaskStatusEnum::WITH_ISSUES_OPENED
+    end
     @param_dtini = params[:dtini] if params[:dtini]
     @param_dtend = params[:dtend] if params[:dtend]
     @param_dtini_estimated = params[:dtini_estimated] if params[:dtini_estimated]
     @param_dtend_estimated = params[:dtend_estimated] if params[:dtend_estimated]
-
-    #activated_ids = params[:activated].collect {|id| id.to_i} if params[:activated]
     @param_projects = params[:projects].collect { |id| id }.delete_if { |id| id == "" } if !params[:projects].nil?
-    #@param_projects = @param_projects - [""] if !@param_projects.nil?
-
     if !params[:filter_by_projects_not_in].nil?
       @param_projects_not_in = params[:filter_by_projects_not_in]
     else
       @param_projects_not_in = false
     end
-    
     @param_requester = params[:requester]
     @param_requester_sector = params[:requester_sector]
-
     @param_groups = params[:groups].collect { |id| id }.delete_if { |id| id == "" } if !params[:groups].nil?
 
 
+
+
     logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+
+    #logger.info { "parametro issue status:  #{ @param_issues_status }" }
+    
 
     @count_issues_opened = 0
     @count_issues_closed = 0
@@ -69,19 +83,33 @@ class PlanningController < ApplicationController
         end
       }
 
-      if usercontainsgroup
-        planning = PlanningHelper::planning_issue_by_user_advanced(
-          user, index, @param_dtini, @param_dtend, 
-          @param_dtini_estimated, @param_dtend_estimated,
-          @param_projects_not_in, @param_projects,
-          @param_requester, @param_requester_sector)
-
-        @users_grouped.add(planning)
-
-        @count_issues_opened += planning.issues.length
-        @count_issues_closed += planning.issues_closed.length
-        
+      if !@param_username.nil? && !user.name.upcase.include?(@param_username.upcase)
+        next
       end
+
+      if usercontainsgroup
+
+          planning = PlanningHelper::planning_issue_by_user_advanced(
+            user, index, @param_dtini, @param_dtend, 
+            @param_dtini_estimated, @param_dtend_estimated,
+            @param_projects_not_in, @param_projects,
+            @param_requester, @param_requester_sector)
+
+          if ( 
+            (@param_issues_status == TaskStatusEnum::ALL) ||
+            (@param_issues_status == TaskStatusEnum::WITHOUT_ISSUES_OPENED && planning.issues.length == 0) ||
+            (@param_issues_status == TaskStatusEnum::WITH_ISSUES_OPENED && planning.issues.length > 0) ||
+            (@param_issues_status == TaskStatusEnum::WITH_ISSUES_OVERDUE && planning.total_overdue > 0) ||
+            (@param_issues_status == TaskStatusEnum::WITH_ISSUES_UNPLANNED && planning.total_unplanned > 0)
+            )
+
+            @users_grouped.add(planning)
+            @count_issues_opened += planning.issues.length
+            @count_issues_closed += planning.issues_closed.length
+          end
+
+      end
+
     }
 
 

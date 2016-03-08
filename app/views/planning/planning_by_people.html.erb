@@ -18,32 +18,23 @@
 	<div class="planning-config">
 
 		<div class="planning-config-content">
-			<h3 class="planning-config-title"><%= l(:filters) %>:</h3>
-			<div class="planning-config-field">
-				<div class="planning-w50p">
-					<label class="planning-config-field-label"><%= l(:filter_by_name) %>:</label>
-					<input class="planning-input-text" type="text" name="filtro-username" />
-				</div>
-				<div class="planning-w50p">
-					<label class="planning-config-field-label"><%= l(:filter_by_issues) %>:</label>
-					<div class="planning-config-field-input">
-						<select name="filtro-issues"  class="planning-select">
-							<option value="2"> <%= l(:filter_by_issues_with) %> </option>
-							<option value="0"> <%= l(:all) %> </option>
-							<option value="1"> <%= l(:filter_by_issues_none) %> </option>
-							<option value="3"> <%= l(:filter_by_issues_overdue) %> </option>
-							<option value="4"> <%= l(:filter_by_issues_unplanned) %> </option>
-						</select>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<hr/>
-
-		<div class="planning-config-content">
 			<h3 class="planning-config-title"><%= l(:newsearch) %>:</h3>
 			<%= form_tag({:controller => "planning", :action => "planning_by_people"}, :method => "get") do %>
+
+				<div class="planning-config-field">
+					<div class="planning-w50p">
+						<label class="planning-config-field-label"><%= l(:filter_by_name) %>:</label>
+						<%= text_field_tag :username, @param_username, class: 'planning-input-text' %>
+					</div>
+					<div class="planning-w50p">
+						<label class="planning-config-field-label"><%= l(:filter_by_issues) %>:</label>
+						<div class="planning-config-field-input">
+
+							<%= select_tag :issues_status, options_for_select([ [l(:filter_by_issues_with), 2], [l(:all), 0], [l(:filter_by_issues_none), 1], [l(:filter_by_issues_overdue), 3], [l(:filter_by_issues_unplanned), 4] ], @param_issues_status), class: 'planning-select' %>
+
+						</div>
+					</div>
+				</div>
 				
 				<div class="planning-config-field">
 					<label class="planning-config-field-label"><%= l(:filter_by_unity) %>:</label>
