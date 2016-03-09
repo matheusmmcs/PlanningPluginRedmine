@@ -61,8 +61,8 @@ table.progress {
 .issue-table .ft_red { font-weight: bold; color: #d9534f }
 .t_yellow { background-color: #f0ad4e; color: white; text-align: center; }
 .issue-table .ft_yellow { font-weight: bold; color: #f0ad4e}
-.t_gray { background-color: #ddd; color: #555; text-align: center; }
-.issue-table .ft_gray { font-weight: bold; color: #999 }
+.t_gray { background-color: #21a6e4; color: white; text-align: center; }
+.issue-table .ft_gray { font-weight: bold; color: #21a6e4 }
 
 
 

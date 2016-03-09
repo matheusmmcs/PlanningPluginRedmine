@@ -1,42 +1,43 @@
 
-<input type="hidden" name="user-groups-info" value="<% data.user.groups.each { |group| %><%= group.id %>,<% }%>">
+<div class="planning-user-content">
+	<input type="hidden" name="user-groups-info" value="<% data.user.groups.each { |group| %><%= group.id %>,<% }%>">
 
-<div class="people-progress">
-	<table style="width: 100%; height: 20px;" cellspacing="0" cellpadding="0">
-		<tr >
-			<% if data.total_paused_percent.round > 0 %>
-				<td class="t_gray"
-					style="width:<%= data.total_paused_percent.round %>%"><%= data.total_paused_percent.round %>%</td>
-			<% end
-			   if data.total_overdue_percent.round > 0 %>
-				<td class="t_red" 
-					style="width:<%= data.total_overdue_percent.round %>%"><%= data.total_overdue_percent.round %>%</td>
-			<% end
-			   if data.total_in_time_percent.round > 0 %>
-				<td  class="t_green"
-					style="width:<%= data.total_in_time_percent.round %>%"><%= data.total_in_time_percent.round %>%</td>
-			<% end
-			   if data.total_unplanned_percent.round > 0 %>
-				<td  class="t_yellow"
-					style="width:<%= data.total_unplanned_percent.round %>%"><%= data.total_unplanned_percent.round %>%</td>
-			<% end %>
-		</tr>
-	</table>
+	<div class="people-progress">
+		<table style="width: 100%; height: 20px;" cellspacing="0" cellpadding="0">
+			<tr >
+				<% if data.total_paused_percent.round > 0 %>
+					<td class="t_gray"
+						style="width:<%= data.total_paused_percent.round %>%"><%= data.total_paused_percent.round %>%</td>
+				<% end
+				   if data.total_overdue_percent.round > 0 %>
+					<td class="t_red" 
+						style="width:<%= data.total_overdue_percent.round %>%"><%= data.total_overdue_percent.round %>%</td>
+				<% end
+				   if data.total_in_time_percent.round > 0 %>
+					<td  class="t_green"
+						style="width:<%= data.total_in_time_percent.round %>%"><%= data.total_in_time_percent.round %>%</td>
+				<% end
+				   if data.total_unplanned_percent.round > 0 %>
+					<td  class="t_yellow"
+						style="width:<%= data.total_unplanned_percent.round %>%"><%= data.total_unplanned_percent.round %>%</td>
+				<% end %>
+			</tr>
+		</table>
+	</div>
+
+
+	<a href="#" class="arrow_down planning-user-details">
+		<%= l(:issues_opened)%> (<%= data.issues.length %>)
+	</a>
+	<div class="issue-table-wrapper issue-table-wrapper-style">
+		<%= render :partial => 'planning/issues_table', :locals => {:data => data, :issues => data.issues} %>
+	</div>
+
+
+	<a href="#" class="arrow_down planning-user-closed-details">
+		<%= l(:issues_closed_month)%> (<%= data.issues_closed.length %>)
+	</a>
+	<div class="issue-closed-table-wrapper issue-table-wrapper-style">
+		<%= render :partial => 'planning/issues_table', :locals => {:data => data, :issues => data.issues_closed} %>
+	</div>
 </div>
-
-
-<a href="#" class="arrow_down planning-user-details">
-	<%= l(:issues_opened)%> (<%= data.issues.length %>)
-</a>
-<div class="issue-table-wrapper issue-table-wrapper-style">
-	<%= render :partial => 'planning/issues_table', :locals => {:data => data, :issues => data.issues} %>
-</div>
-
-
-<a href="#" class="arrow_down planning-user-closed-details">
-	<%= l(:issues_closed_month)%> (<%= data.issues_closed.length %>)
-</a>
-<div class="issue-closed-table-wrapper issue-table-wrapper-style">
-	<%= render :partial => 'planning/issues_table', :locals => {:data => data, :issues => data.issues_closed} %>
-</div>
-

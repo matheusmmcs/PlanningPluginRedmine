@@ -2,6 +2,8 @@
 	$(document).ready(function(){
 
 		var PLANNING_USER = 'planning-user';
+
+		var PLANNING_USER_CONTENT = '.'+PLANNING_USER+"-content";
 		var PLANNING_USER_CLASS = '.'+PLANNING_USER;
 		var PLANNING_USER_ISSUES_CLOSED = PLANNING_USER+'-closed';
 		var PLANNING_USER_ISSUES_CLOSED_CLASS = '.'+PLANNING_USER_ISSUES_CLOSED;
@@ -10,24 +12,35 @@
 		
 
 
-		$(PLANNING_USER_CLASS).addClass(PLANNING_USER+'--active-animation')
+		$(PLANNING_USER_CONTENT).addClass(PLANNING_USER+'--active-animation')
 							.addClass(PLANNING_USER_ISSUES_CLOSED+'--active-animation')
 
 
 		$('.planning-user-details').on('click', function(e) {
 			e.preventDefault();
 			var $this = $(this),
-				$planningUser = $this.closest(PLANNING_USER_CLASS),
-				$table = $planningUser.find(ISSUE_TABLE_WRAPPER),
+				$planningUser = $this.closest(PLANNING_USER_CLASS);
+
+			if (!$planningUser.length) {
+				$planningUser = $this.closest(PLANNING_USER_CONTENT);
+			}
+
+			var $table = $planningUser.find(ISSUE_TABLE_WRAPPER),
 				openClass = PLANNING_USER+'--active';
+
 			toogleTable($this, $planningUser, $table, openClass)				
 		});
 
 		$('.planning-user-closed-details').on('click', function(e) {
 			e.preventDefault();
 			var $this = $(this),
-				$planningUser = $this.closest(PLANNING_USER_CLASS),
-				$table = $planningUser.find(ISSUE_CLOSED_TABLE_WRAPPER),
+				$planningUser = $this.closest(PLANNING_USER_CLASS);
+
+			if (!$planningUser.length) {
+				$planningUser = $this.closest(PLANNING_USER_CONTENT);
+			}
+			
+			var	$table = $planningUser.find(ISSUE_CLOSED_TABLE_WRAPPER),
 				openClass = PLANNING_USER_ISSUES_CLOSED+'--active';
 			toogleTable($this, $planningUser, $table, openClass)				
 		});

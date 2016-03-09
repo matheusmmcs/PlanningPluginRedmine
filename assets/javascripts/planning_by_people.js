@@ -24,21 +24,25 @@
 		});
 
 		function normalizeString(str, preserveCaracters) {
-		    str = str.toUpperCase();
-		    str = str.replace(/[ÀÁÂÃ]/g,"A");
-		    str = str.replace(/[ÈÉÊ]/g,"E");
-		    str = str.replace(/[ÍÌÎ]/g,"I");
-		    str = str.replace(/[ÓÒÔÕ]/g,"O");
-		    str = str.replace(/[ÚÙÛ]/g,"U");
-		    str = str.replace(/[Ç]/g,"C");
-		    if (preserveCaracters !== true) {
-		        str = str.replace(/[^A-Z0-9]/gi,'');
-		    }
-		    return str;
+			if (str) {
+				str = str.toUpperCase();
+			    str = str.replace(/[ÀÁÂÃ]/g,"A");
+			    str = str.replace(/[ÈÉÊ]/g,"E");
+			    str = str.replace(/[ÍÌÎ]/g,"I");
+			    str = str.replace(/[ÓÒÔÕ]/g,"O");
+			    str = str.replace(/[ÚÙÛ]/g,"U");
+			    str = str.replace(/[Ç]/g,"C");
+			    if (preserveCaracters !== true) {
+			        str = str.replace(/[^A-Z0-9]/gi,'');
+			    }
+			    return str;
+			} else {
+				return "";
+			}
 		}
 
 		var initialize = function() {
-			filterUsers();
+			//filterUsers();
 		}
 
 		var filterUsers = function() {
