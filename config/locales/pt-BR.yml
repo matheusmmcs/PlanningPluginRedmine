@@ -27,6 +27,7 @@ pt-BR:
   # Issue Information
   status: Status
   description: Descrição
+  created_on_date: Data de Abertura
   start_date: Data Inicio
   due_date: Data Prevista
   spent_hours: Horas Trabalhadas
