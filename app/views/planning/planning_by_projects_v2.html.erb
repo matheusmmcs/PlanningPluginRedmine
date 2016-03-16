@@ -1,0 +1,49 @@
+<div class="planning-redmine">
+	<h2>
+		<%=l(:projects_based_planning)%> 
+		<a href="#" id="label_open_button" style="display:none; font-size: 7pt;">(<%= l(:open) %> <%= l(:legend) %>)</a>
+	</h2> 
+
+	<fieldset id="legend">
+		<legend><%= l(:legend) %> (<a href="#" class="planning-legend-close"><%= l(:close) %></a>)</legend>
+		<ul>
+			<li ><%= l(:no_issues) %></li>
+			<li class="t_gray"><%= l(:paused) %></li>
+			<li class="t_red" ><%= l(:overdue) %></li>
+			<li class="t_green"><%= l(:in_time) %></li>
+			<li class="t_yellow"><%= l(:unplanned) %></li>
+		</ul>
+	</fieldset>
+
+	<% @projects.each { |data| %>
+		<div class="planning-user">
+			<a name="<%=data.id%>"/>
+			<h3>
+				<%= link_to_project(data) %>
+			</h3>
+		</div>
+	<% } %>
+
+
+
+
+	<% content_for :header_tags do %>
+		<!-- vendor -->
+		<%= stylesheet_link_tag '../vendor/air-datepicker/css/datepicker.min', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+		<%= javascript_include_tag '../vendor/air-datepicker/js/datepicker.min', :plugin => 'planning_plugin_redmine' %>
+		<%= javascript_include_tag '../vendor/air-datepicker/js/i18n/datepicker.pt-br', :plugin => 'planning_plugin_redmine' %>
+		<%= javascript_include_tag '../vendor/formatter/jquery.formatter.min', :plugin => 'planning_plugin_redmine' %>
+		<%= stylesheet_link_tag '../vendor/chosen_v1.5.0/chosen.min', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+		<%= javascript_include_tag '../vendor/chosen_v1.5.0/chosen.jquery.min', :plugin => 'planning_plugin_redmine' %>
+
+		<!-- plugin -->
+	  	<%= stylesheet_link_tag '../stylesheets-dist/trackers_progress_v1.1', :plugin => 'planning_plugin_redmine', :media => 'all' %>
+	  	<!--
+	  	<%= javascript_include_tag 'planning_by_people', :plugin => 'planning_plugin_redmine' %>
+	  	<%= javascript_include_tag 'issues_table', :plugin => 'planning_plugin_redmine' %>
+	  	-->
+	<% end %>
+
+	<% html_title(l(:projects_based_planning)) %>
+
+</div>

@@ -21,17 +21,11 @@ require 'date'
 
 module PlanningHelper
 
-
-
   def self.planning_issue_by_user(user)
-    self.planning_issue_by_user_advanced(user, nil, nil, nil, nil, nil, nil, nil, nil, nil)
+    self.planning_issue_by_user_advanced(user, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil)
   end
 
-  def self.format_date(date)
-    return Date.strptime(date, "%d/%m/%Y") if !date.nil? && !date.empty?
-  end
-  
-  def self.planning_issue_by_user_advanced(user, index = 0, dtini, dtend, dtini_estimated, dtend_estimated, filter_by_projects_not_in, projects, requester, requester_sector)
+  def self.planning_issue_by_user_advanced(user, index = 0, dtini, dtend, dtini_estimated, dtend_estimated, filter_by_projects_not_in, projects, requester, requester_sector, ocomon_number, only_ocomon)
     #datas acima dos limites para evitar ifs de datas nulas
 
     logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
@@ -80,6 +74,15 @@ module PlanningHelper
       verify_eq = verify_eq.succ
       verify_req_sec = true
     end
+    if (!ocomon_number.nil? && !ocomon_number.strip.empty?)
+      verify_eq = verify_eq.succ
+      verify_req_ocomon_num = true
+    end
+    if (!only_ocomon.nil? && only_ocomon)
+      verify_eq = verify_eq.succ
+      verify_req_only_comon = true
+    end
+    
 
 
     issues = issues.each{ |issue|
@@ -91,11 +94,23 @@ module PlanningHelper
         f_id = field_value.custom_field.id
         f_value = field_value.value
 
+        #solicitante
         if (verify_req == true && f_id == 5 && !f_value.nil? && f_value.upcase == CGI.unescapeHTML(requester.upcase))
           count_eq += 1
         end
 
+        #setor solicitante
         if (verify_req_sec == true && f_id == 11 && !f_value.nil? && f_value.upcase == CGI.unescapeHTML(requester_sector.upcase))
+          count_eq += 1
+        end
+
+        #ocomon number
+        if (verify_req_ocomon_num == true && f_id == 1 && f_value == ocomon_number.strip)
+          count_eq += 1
+        end
+
+        #contains ocomon number
+        if (verify_req_only_comon == true && f_id == 1 && !f_value.nil? && !f_value.empty?)
           count_eq += 1
         end
       }
@@ -107,8 +122,8 @@ module PlanningHelper
 
     #busca por tarefas fechadas no mês atual
 
-#joins(:status).where("#{IssueStatus.table_name}.is_closed = ?", is_closed)
-#.open(false)
+    #joins(:status).where("#{IssueStatus.table_name}.is_closed = ?", is_closed)
+    #.open(false)
 
     issues_closed = Set.new
 
@@ -129,6 +144,19 @@ module PlanningHelper
     
     IssueByUser.new(user, issues_filtred, issues_closed, index)
   end
+
+  def self.format_date(date)
+    return Date.strptime(date, "%d/%m/%Y") if !date.nil? && !date.empty?
+  end
+
+
+  def self.planning_projects(project)
+    IssueByProject.new(project.issues)
+  end
+
+
+
+
   
   module VersionPatch
     def self.included(base)

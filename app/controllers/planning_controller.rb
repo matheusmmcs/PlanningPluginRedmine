@@ -60,7 +60,8 @@ class PlanningController < ApplicationController
     @param_requester = params[:requester]
     @param_requester_sector = params[:requester_sector]
     @param_groups = params[:groups].collect { |id| id }.delete_if { |id| id == "" } if !params[:groups].nil?
-
+    @param_ocomon_number = params[:ocomon_number]
+    @param_only_ocomon = !params[:filter_only_ocomon].nil? ? params[:filter_only_ocomon] : false
 
 
 
@@ -93,7 +94,7 @@ class PlanningController < ApplicationController
             user, index, @param_dtini, @param_dtend, 
             @param_dtini_estimated, @param_dtend_estimated,
             @param_projects_not_in, @param_projects,
-            @param_requester, @param_requester_sector)
+            @param_requester, @param_requester_sector, @param_ocomon_number, @param_only_ocomon)
 
           if ( 
             (@param_issues_status == TaskStatusEnum::ALL) ||
@@ -120,6 +121,39 @@ class PlanningController < ApplicationController
 
   end
 
+
+
+  def planning_by_projects_v2
+    projects_filtred = Set.new
+    projects = Project.includes(:issue_custom_fields).all
+
+    logger = Logger.new("/u01/redmine/redmine/log/teste.log", shift_age = 7, shift_size = 1048576)
+    #logger.info { "dtini: #{dtini}" }
+
+    #http://www.redmine.org/projects/redmine/wiki/Rest_Projects
+    #http://10.2.3.114/redmine/planning/projects
+    #http://www.mitchcrowe.com/10-most-underused-activerecord-relation-methods/
+    #http://guides.rubyonrails.org/active_record_querying.html#joining-tables
+
+    projects.each do |project|
+      project.custom_field_values.each{ |field_value|
+        f_id = field_value.custom_field.id
+        f_value = field_value.value
+
+        #logger.info { "#{project.name}: #{f_id} (#{f_value}) -> #{f_value.class.name}" }
+        if (f_id == 13 && f_value.to_s == "1")
+          projects_filtred.add(PlanningHelper::planning_projects(project))
+        end
+      }
+    end
+
+    @projects = projects_filtred
+  end
+
+
+
+
+  #deprecated
   def planning_by_projects
     get_queryPlanning
 

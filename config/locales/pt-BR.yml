@@ -60,6 +60,8 @@ pt-BR:
   newsearch_btn: Aplicar
   newsearch_projects: Tarefas do(s) projeto(s)
   newsearch_projects_exclude: Todos os projetos, exceto os selecionados
+  newsearch_only_ocomon: Apenas tarefas com OCOMON
+  newsearch_ocomon_number: Número do OCOMON
 
   # General
   all: Todos

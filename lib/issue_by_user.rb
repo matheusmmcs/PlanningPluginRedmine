@@ -43,15 +43,21 @@ class IssueByUser
 
 
         issue.custom_field_values.each { |field|
-            if field.custom_field.name == "OCOMON"
+            f_id = field.custom_field.id
+
+            #ocomon
+            if f_id == 1
               @issues_ocomon[issue.id.to_s] = field.value
-            elsif field.custom_field.name.index("Prioridade") != -1
+              #prioridade
+            elsif f_id == 10
               @issues_priority[issue.id.to_s] = field.value
             end
-            if field.custom_field.name.downcase == "solicitante"
+            #solicitante
+            if f_id == 5
               @issues_requester[issue.id.to_s] = field.value
             end
-            if field.custom_field.name.downcase == "setor solicitante"
+            #setor solicitante
+            if f_id == 11
               @issues_requester_sector[issue.id.to_s] = field.value
             end
         }

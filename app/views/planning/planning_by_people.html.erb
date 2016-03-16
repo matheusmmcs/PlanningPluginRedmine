@@ -156,6 +156,23 @@
 
 				</div>
 
+				<div class="planning-config-field u-overflow-visible">
+					
+					<label class="planning-config-field-label"><%= l(:newsearch_ocomon_number) %>:</label>
+					<div class="planning-config-field-input">
+
+						<%= text_field_tag :ocomon_number, @param_ocomon_number, class: 'planning-input-text planning-input-margin-right' %>
+
+					    <label>
+					    	
+ 							<%= check_box_tag "filter_only_ocomon", "true", @param_only_ocomon %>
+
+					      	<span><%= l(:newsearch_only_ocomon) %></span>
+					    </label>
+					</div>
+
+				</div>
+
 				<div class="planning-config-field">
 					<%= button_tag l(:newsearch_btn), class: 'planning-btn planning-btn-primary' %>
 					<%= button_tag "Limpar", type: :reset, class: 'planning-btn planning-reset-form' %>
