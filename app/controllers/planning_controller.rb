@@ -31,6 +31,7 @@ class PlanningController < ApplicationController
     WITH_ISSUES_OPENED = "2"
     WITH_ISSUES_OVERDUE = "3"
     WITH_ISSUES_UNPLANNED = "4"
+    WITHOUT_ISSUES_IN_PROGRESS = "5"
   end
   
   def planning_by_people
@@ -102,7 +103,8 @@ class PlanningController < ApplicationController
             (@param_issues_status == TaskStatusEnum::WITHOUT_ISSUES_OPENED && planning.issues.length == 0) ||
             (@param_issues_status == TaskStatusEnum::WITH_ISSUES_OPENED && planning.issues.length > 0) ||
             (@param_issues_status == TaskStatusEnum::WITH_ISSUES_OVERDUE && planning.total_overdue > 0) ||
-            (@param_issues_status == TaskStatusEnum::WITH_ISSUES_UNPLANNED && planning.total_unplanned > 0)
+            (@param_issues_status == TaskStatusEnum::WITH_ISSUES_UNPLANNED && planning.total_unplanned > 0) ||
+            (@param_issues_status == TaskStatusEnum::WITHOUT_ISSUES_IN_PROGRESS && planning.issues_in_progress.length == 0)
             )
 
             @users_grouped.add(planning)

@@ -30,7 +30,7 @@
 						<label class="planning-config-field-label"><%= l(:filter_by_issues) %>:</label>
 						<div class="planning-config-field-input">
 
-							<%= select_tag :issues_status, options_for_select([ [l(:filter_by_issues_with), 2], [l(:all), 0], [l(:filter_by_issues_none), 1], [l(:filter_by_issues_overdue), 3], [l(:filter_by_issues_unplanned), 4] ], @param_issues_status), class: 'planning-select' %>
+							<%= select_tag :issues_status, options_for_select([ [l(:filter_by_issues_with), 2], [l(:all), 0], [l(:filter_by_issues_none), 1], [l(:filter_by_issues_overdue), 3], [l(:filter_by_issues_unplanned), 4], [l(:filter_by_without_issues_in_progress), 5] ], @param_issues_status), class: 'planning-select' %>
 
 						</div>
 					</div>

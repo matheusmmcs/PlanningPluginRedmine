@@ -45,6 +45,7 @@ pt-BR:
   filter_by_issues_with: Com Tarefas Abertas
   filter_by_issues_overdue: Com Tarefas Atrasadas
   filter_by_issues_unplanned: Com Tarefas Sem Data
+  filter_by_without_issues_in_progress: Sem Tarefas Em Progresso
 
   filter_by_issues_requester: Tarefas solicitadas por
   filter_by_issues_requester_palceholder: Selecione o Solicitante desejado
