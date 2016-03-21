@@ -72,6 +72,7 @@ class PlanningController < ApplicationController
 
     @count_issues_opened = 0
     @count_issues_closed = 0
+    @count_issues_in_progress = 0
 
     users = User.active.order(:firstname)
     users.each_with_index { |user, index|
@@ -107,6 +108,7 @@ class PlanningController < ApplicationController
             @users_grouped.add(planning)
             @count_issues_opened += planning.issues.length
             @count_issues_closed += planning.issues_closed.length
+            @count_issues_in_progress += planning.issues_in_progress.length
           end
 
       end

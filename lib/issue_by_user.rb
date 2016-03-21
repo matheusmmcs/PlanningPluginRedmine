@@ -1,11 +1,12 @@
 class IssueByUser
   
-  attr_reader :user, :issues, :issues_closed, :issues_ocomon, :issues_priority, :issues_requester, :issues_requester_sector, :issues_status, :order, :total_paused, :total_unplanned, :total_overdue, :total_in_time, :total_paused_percent , :total_unplanned_percent, :total_overdue_percent, :total_in_time_percent
+  attr_reader :user, :issues, :issues_closed, :issues_in_progress, :issues_ocomon, :issues_priority, :issues_requester, :issues_requester_sector, :issues_status, :order, :total_paused, :total_unplanned, :total_overdue, :total_in_time, :total_paused_percent , :total_unplanned_percent, :total_overdue_percent, :total_in_time_percent
      
-  def initialize(user, issues, issues_closed, order)
+  def initialize(user, issues, issues_closed, issues_in_progress, order)
     @user = user
     @issues = issues
     @issues_closed = issues_closed
+    @issues_in_progress = issues_in_progress
     @order = order
 
     @issues_ocomon = {}

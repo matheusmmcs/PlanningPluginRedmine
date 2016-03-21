@@ -34,6 +34,14 @@
 	</div>
 
 
+	<a href="#" class="arrow_down planning-user-in-progress-details">
+		<%= l(:issues_in_progress)%> (<%= data.issues_in_progress.length %>)
+	</a>
+	<div class="issue-in-progress-table-wrapper issue-table-wrapper-style">
+		<%= render :partial => 'planning/issues_table', :locals => {:data => data, :issues => data.issues_in_progress} %>
+	</div>
+
+
 	<a href="#" class="arrow_down planning-user-closed-details">
 		<%= l(:issues_closed_month)%> (<%= data.issues_closed.length %>)
 	</a>

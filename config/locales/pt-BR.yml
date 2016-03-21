@@ -77,13 +77,21 @@ pt-BR:
 
   issues_opened: Tarefas Abertas
   issues_closed_month: Tarefas Fechadas no mês atual
+  issues_in_progress: Tarefas Em Progresso
+
+  #Summary
+  summary: Sumário
+  summary_issues_opened: Total de Tarefas Abertas
+  summary_issues_closed_month: Total de Tarefas Fechadas no Mês
+  summary_issues_in_progress: Total de Tarefas Em Progresso
+
 
   issue_opened_of: 
-    zero: "%{count} Tarefa Aberta de "
+    zero: "Nenhuma Tarefa Aberta de "
     one: "%{count} Tarefa Aberta de "
     other: "%{count} Tarefas Abertas de "
 
   issue_total: 
-    zero: "%{count} Tarefa"
+    zero: "Nenhuma Tarefa"
     one: "%{count} Tarefa"
     other: "%{count} Tarefas"

@@ -331,31 +331,38 @@ fieldset#legend ul li {
 	border: 1px solid #CCC;
 	padding: 2%;
 	margin: 10px 1%;
-	max-height: 175px;
+	max-height: 190px;
 
 	box-shadow: 2px 2px 5px #CCC;
-}
-.planning-user.planning-user--active-animation,
-.planning-user.planning-user-closed--active-animation {
-	-webkit-transition: all 1s;
-    transition: all 1s;
-}
-.planning-user.planning-user--active,
-.planning-user.planning-user-closed--active {
-	width: 98%;
-	background-color: white;
-	border-color: #BBB;
-	max-height: 99999px;
 }
 .planning-user .people-progress {
 	border: 1px solid #D7D7D7; 
 	font-weight: bold;
 	border-spacing: 0;
 }
-.planning-user-details {
+
+
+.planning-user.planning-user--active-animation,
+.planning-user.planning-user-closed--active-animation,
+.planning-user.planning-user-in-progress--active-animation {
+	-webkit-transition: all 1s;
+    transition: all 1s;
+}
+.planning-user.planning-user--active,
+.planning-user.planning-user-closed--active,
+.planning-user.planning-user-in-progress--active {
+	width: 98%;
+	background-color: white;
+	border-color: #BBB;
+	max-height: 99999px;
+}
+.planning-user-details,
+.planning-user-closed-details,
+.planning-user-in-progress-details {
 	display: block;
 	margin-top: 10px;
 }
+
 
 .planning-w50p {
 	width: 50%;

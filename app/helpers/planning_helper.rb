@@ -141,8 +141,17 @@ module PlanningHelper
     })
 
 
+    #busca por tarefas em progresso (status = 2)
+    issues_in_progress = Set.new
+
+    issues_filtred.each{ |issue|
+      if issue.status_id == 2
+        issues_in_progress.add(issue)
+      end
+    }
+
     
-    IssueByUser.new(user, issues_filtred, issues_closed, index)
+    IssueByUser.new(user, issues_filtred, issues_closed, issues_in_progress, index)
   end
 
   def self.format_date(date)

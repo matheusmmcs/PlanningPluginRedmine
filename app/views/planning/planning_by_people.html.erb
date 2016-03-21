@@ -188,11 +188,13 @@
 	<hr/>
 
 	<div class="planning-summary">
-		<h3 class="planning-summary-title">Sumário:</h3>
-		<strong>Total de Tarefas Abertas:</strong>
+		<h3 class="planning-summary-title"><%= l(:summary) %>:</h3>
+		<strong><%= l(:summary_issues_opened) %>:</strong>
 		<span><%= @count_issues_opened %></span>
-		<strong>Total de Tarefas Fechadas no Mês:</strong>
+		<strong><%= l(:summary_issues_closed_month) %>:</strong>
 		<span><%= @count_issues_closed %></span>
+		<strong><%= l(:summary_issues_in_progress) %>:</strong>
+		<span><%= @count_issues_in_progress %></span>
 	</div>
 
 	<hr/>
