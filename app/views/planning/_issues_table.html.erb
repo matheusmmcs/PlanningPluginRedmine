@@ -5,6 +5,7 @@
 			<th class="witdh-col-min"><%= l(:start_date)%></th>
 			<th class="witdh-col-min"><%= l(:due_date)%></th>
 			<th class="witdh-col-min"><%= l(:status)%></th>
+			<th class="witdh-col-min"><%= l(:situation)%></th>
 			<th class="witdh-col-large"><%= l(:description)%></th>
 			<th class="witdh-col-min"><%= l(:spent_hours)%></th>
 			<th class="witdh-col-min"><%= l(:filter_by_issues_requester)%></th>
@@ -20,6 +21,7 @@
 				<td class="witdh-col-min"><%= issue.start_date.strftime('%d/%m/%Y') unless issue.start_date.nil? %></td>
 				<td class="witdh-col-min"><%= issue.due_date.strftime('%d/%m/%Y') unless issue.due_date.nil? %></td>
 				<td class="witdh-col-min <%= data.issues_status[issue.id.to_s] %>"><%=l(issue.planning_status)%></td>
+				<td class="witdh-col-min %>"><%= issue.status.name %></td>
 				<td class="witdh-col-large">
 					<%= link_to("##{issue.parent.id} > ", {:controller => "issues", :action => "show", :id => issue.parent.id}, :class => issue.parent.css_classes, :title => issue.parent.subject, :target => "_blank") if !issue.parent.nil? %> 
 					
