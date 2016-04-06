@@ -43,7 +43,7 @@
 
 				<td class="witdh-col-min">
 					<% if (!data.issues_ocomon[issue.id.to_s].nil? && data.issues_ocomon[issue.id.to_s].length > 0) %>
-						<a href="https://ocomon.sefaz.pi.gov.br/ocomon/geral/mostra_consulta.php?numero=<%= data.issues_ocomon[issue.id.to_s] %>" target="_blank"><%= data.issues_ocomon[issue.id.to_s] %></a>
+						<a href="https://relatorios.sefaz.pi.gov.br/ReportServer?%2fUNITEC%2fDetalhe+Ocomon&rs:Command=Render&Ocomon=<%= data.issues_ocomon[issue.id.to_s] %>" target="_blank"><%= data.issues_ocomon[issue.id.to_s] %></a>
 					<% else %>
 						-
 					<% end %>
